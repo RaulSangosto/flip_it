@@ -1,4 +1,5 @@
 import 'package:crossingwords/src/state/bloc/game/model/card_collection.dart';
+import 'package:crossingwords/src/state/bloc/sound/sound_bloc.dart';
 import 'package:crossingwords/src/theme/main_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,43 +30,47 @@ class PlayPage extends StatelessWidget {
         } else if (gameState is GameFinished) {
           finised = true;
           win = gameState.win();
+          if(win) {
+            BlocProvider.of<SoundBloc>(context).add(PlaySound(SoundType.win));
+          } else {
+            BlocProvider.of<SoundBloc>(context).add(PlaySound(SoundType.lose));
+          }
         }
         return Scaffold(
           endDrawer: const DrawerMenu(),
-          backgroundColor: Colors.black,
           body: BlocBuilder<HelpMenuBloc, HelpMenuState>(
             builder: (context, helpMenuState) {
               return Stack(
                 children: [
                   Opacity(
-                    opacity: helpMenuState.open ? .6 : 1,
+                    opacity: helpMenuState.open ? .8 : 0,
                     child: Container(
-                      color: Theme.of(context).backgroundColor,
-                      child: SafeArea(
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(
-                                flex: 3,
-                                child: TopBar(deck: gameState.cards),
-                              ),
-                              Expanded(
-                                flex: 4,
-                                child: PlayCardZone(
-                                    collections: gameState.collections),
-                              ),
-                              Expanded(
-                                flex: 6,
-                                child: HandCards(
-                                  cards: gameState.hand,
-                                ),
-                              ),
-                            ],
+                      color: darkColor,
+                    ),
+                  ),
+                  SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: TopBar(deck: gameState.cards),
                           ),
-                        ),
+                          Expanded(
+                            flex: 4,
+                            child: PlayCardZone(
+                                collections: gameState.collections),
+                          ),
+                          Expanded(
+                            flex: 6,
+                            child: HandCards(
+                              cards: gameState.hand,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -91,7 +96,6 @@ class HelpArea extends StatefulWidget {
 }
 
 class _HelpAreaState extends State<HelpArea> {
-  bool _open = false;
 
   @override
   Widget build(BuildContext context) {
@@ -106,11 +110,6 @@ class _HelpAreaState extends State<HelpArea> {
                 : 140,
             height: helpMenuState.open ? 150 : 60,
             duration: const Duration(milliseconds: 200),
-            onEnd: () {
-              setState(() {
-                _open = true;
-              });
-            },
             child: Card(
               clipBehavior: Clip.hardEdge,
               elevation: 0,

@@ -39,16 +39,26 @@ class CardCollection {
 
   bool _isValidCardPlaceUp(int card) {
     final last = cards.last;
-    return (last < card || last == card - 10 || last == card + 10);
+    return (last < card || isImproveCard(card));
   }
 
   bool _isValidCardPlaceDown(int card) {
     final last = cards.last;
-    return (last > card || last == card - 10 || last == card + 10);
+    return (last > card || isImproveCard(card));
+  }
+
+  bool isImproveCard(int card) {
+    final last = cards.last;
+    if (direction == Direction.up && last == card + 10) {
+      return true;
+    } else if (direction == Direction.down && last == card - 10) {
+      return true;
+    }
+    return false;
   }
 
   bool isValidCardPlace(int card) {
-    if (card <= 0) return isValidSpecialCardPlace(card);
+    if (isSpecialCard(card)) return isValidSpecialCardPlace(card);
     if (direction == Direction.up) {
       return _isValidCardPlaceUp(card);
     } else {
@@ -56,9 +66,16 @@ class CardCollection {
     }
   }
 
+  bool isSpecialCard(int card) {
+    return card <= 0;
+  }
+
   bool isValidSpecialCardPlace(int card) {
+    var last = cards.last;
+    if (cards.length <= 1) {
+      return false;
+    }
     if (card == reduceCard) {
-      var last = cards.last;
       if (last > 20 && last < maxCardNumber - 19) {
         return true;
       } else if (direction == Direction.up && last > 21) {

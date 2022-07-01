@@ -1,14 +1,40 @@
 part of 'sound_bloc.dart';
 
-enum SoundType { pop, draw, click, cancel, move }
+enum SoundType {
+  place,
+  improve,
+  special,
+  draw,
+  click,
+  select,
+  cancel,
+  move,
+  win,
+  lose,
+}
 
-List<String> popSounds = [
+List<String> placeSounds = [
   "sounds/pop1.ogg",
   "sounds/pop2.ogg",
   "sounds/pop3.ogg"
 ];
+List<String> improveSounds = [
+  "sounds/ui/drop_004.ogg",
+  "sounds/ui/drop_002.ogg",
+];
+
+List<String> selectSounds = [
+  "sounds/ui/drop_002.ogg",
+  "sounds/ui/drop_003.ogg",
+];
+List<String> specialSounds = [
+  "sounds/ui/select_005.ogg",
+  "sounds/ui/select_004.ogg",
+];
+List<String> winSounds = ["sounds/ui/confirmation_002.ogg"];
+List<String> loseSounds = ["sounds/ui/minimize_006.ogg"];
 List<String> drawSounds = ["sounds/draw.wav"];
-List<String> clickSounds = ["sounds/playcard.wav"];
+List<String> clickSounds = ["sounds/ui/bong_001.ogg"];
 
 @immutable
 abstract class SoundState {
@@ -38,8 +64,17 @@ abstract class SoundState {
   Future<Source> _getRandomSoundType(SoundType type) async {
     String sound;
     switch (type) {
-      case SoundType.pop:
-        sound = popSounds[Random().nextInt(popSounds.length)];
+      case SoundType.place:
+        sound = placeSounds[Random().nextInt(placeSounds.length)];
+        break;
+      case SoundType.improve:
+        sound = improveSounds[Random().nextInt(improveSounds.length)];
+        break;
+      case SoundType.special:
+        sound = specialSounds[Random().nextInt(specialSounds.length)];
+        break;
+      case SoundType.select:
+        sound = selectSounds[Random().nextInt(selectSounds.length)];
         break;
       case SoundType.draw:
         sound = drawSounds[Random().nextInt(drawSounds.length)];
@@ -47,8 +82,14 @@ abstract class SoundState {
       case SoundType.click:
         sound = clickSounds[Random().nextInt(clickSounds.length)];
         break;
+      case SoundType.win:
+        sound = winSounds[Random().nextInt(winSounds.length)];
+        break;
+      case SoundType.lose:
+        sound = loseSounds[Random().nextInt(loseSounds.length)];
+        break;
       default:
-        sound = popSounds[Random().nextInt(popSounds.length)];
+        sound = placeSounds[Random().nextInt(placeSounds.length)];
     }
     final soundFile = await playerCache.load(sound);
     return DeviceFileSource(soundFile.path);

@@ -83,36 +83,56 @@ class _CardGroupCollectionState extends State<CardGroupCollection>
           builder: (context, state) {
             final selected = state.selectedWidget == widget.key;
             final scale = selected ? 0.1 : 0.0;
+            var opacity = 1.0;
+            Color? cardBorder = getBorderCardColor(card);
+            Color? border = cardBorder;
+
+            if (state.open && !selected) {
+              opacity = .7;
+              border = cardBorder;
+            } else {
+              opacity = 1.0;
+              if (cardBorder == null) {
+                border = white;
+              }
+            }
             return GestureDetector(
               onTap: () {
                 if (state.open && widget.key != null) {
+                  if (!selected) {
+                    BlocProvider.of<SoundBloc>(context)
+                        .add(PlaySound(SoundType.select));
+                  }
                   BlocProvider.of<HelpMenuBloc>(context).add(
                       SelectCardCollectionMenu(widget.collection, widget.key!));
                 }
               },
-              child: Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.identity()
-                  ..scale(
-                      cardWidth + scale, cardWidth + scale, cardWidth + scale),
-                child: GameCard(
-                  selected: selected,
-                  color: getCardColor(card),
-                  borderColor: getBorderCardColor(card),
-                  content: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        card.toString(),
-                        style: cardTextStyle.copyWith(
-                            color: getContentCardColor(card)),
-                      ),
-                      Icon(
-                        icon,
-                        color: getContentCardColor(card),
-                        size: 36,
-                      ),
-                    ],
+              child: Opacity(
+                opacity: opacity,
+                child: Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.identity()
+                    ..scale(cardWidth + scale, cardWidth + scale,
+                        cardWidth + scale),
+                  child: GameCard(
+                    selected: selected,
+                    color: getCardColor(card),
+                    borderColor: border,
+                    content: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          card.toString(),
+                          style: cardTextStyle.copyWith(
+                              color: getContentCardColor(card)),
+                        ),
+                        Icon(
+                          icon,
+                          color: getContentCardColor(card),
+                          size: 36,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -122,7 +142,6 @@ class _CardGroupCollectionState extends State<CardGroupCollection>
       },
       onWillAccept: (data) {
         if (data != null && widget.collection.isValidCardPlace(data)) {
-          // player.play(AssetSource('sounds/playcard.wav'));
           _controller.animateTo(.1);
           return true;
         }
@@ -130,7 +149,14 @@ class _CardGroupCollectionState extends State<CardGroupCollection>
         return false;
       },
       onAccept: (data) {
-        BlocProvider.of<SoundBloc>(context).add(PlaySound(SoundType.pop));
+        if (widget.collection.isSpecialCard(data)) {
+          BlocProvider.of<SoundBloc>(context).add(PlaySound(SoundType.special));
+        }
+        if (widget.collection.isImproveCard(data)) {
+          BlocProvider.of<SoundBloc>(context).add(PlaySound(SoundType.improve));
+        } else {
+          BlocProvider.of<SoundBloc>(context).add(PlaySound(SoundType.place));
+        }
         _controller.forward(from: 0.0);
         BlocProvider.of<GameBloc>(context)
             .add(PlaceCardInCollection(data, widget.index));
