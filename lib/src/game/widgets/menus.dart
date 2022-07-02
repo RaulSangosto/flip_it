@@ -23,9 +23,8 @@ class LoseMenu extends StatelessWidget {
               flex: 10,
             ),
             ElevatedButton(
-              onPressed: () =>
-                  BlocProvider.of<GameBloc>(context).add(ResetGame()),
-              child: const Text("Reset"),
+              onPressed: () => Navigator.pushNamed(context, '/options'),
+              child: const Text("Settings"),
             ),
             const Spacer(),
             ElevatedButton(
@@ -33,12 +32,13 @@ class LoseMenu extends StatelessWidget {
                 BlocProvider.of<GameBloc>(context).add(ResetGame());
                 Navigator.popUntil(context, ModalRoute.withName('/'));
               },
-              child: const Text("Exit"),
+              child: const Text("Go To Menu"),
             ),
             const Spacer(),
             ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/options'),
-              child: const Text("Options"),
+              onPressed: () =>
+                  BlocProvider.of<GameBloc>(context).add(ResetGame()),
+              child: const Text("Play Again"),
             ),
             const Spacer(
               flex: 7,
@@ -57,12 +57,53 @@ class WinMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox.expand(
-      child: IgnorePointer(
-        child: Confetti(
-          isStopped: false,
+    return Stack(
+      children: [
+        Container(
+          color: darkColor.withOpacity(.6),
         ),
-      ),
+        const SizedBox.expand(
+          child: IgnorePointer(
+            child: Confetti(
+              isStopped: false,
+            ),
+          ),
+        ),
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Spacer(
+                flex: 10,
+              ),
+              ElevatedButton(
+                style: secondaryButton,
+                onPressed: () => Navigator.pushNamed(context, '/options'),
+                child: const Text("Settings"),
+              ),
+              const Spacer(),
+              ElevatedButton(
+                style: secondaryButton,
+                onPressed: () {
+                  BlocProvider.of<GameBloc>(context).add(ResetGame());
+                  Navigator.popUntil(context, ModalRoute.withName('/'));
+                },
+                child: const Text("Go to Menu"),
+              ),
+              const Spacer(),
+              ElevatedButton(
+                style: secondaryButton,
+                onPressed: () =>
+                    BlocProvider.of<GameBloc>(context).add(ResetGame()),
+                child: const Text("Play Again"),
+              ),
+              const Spacer(
+                flex: 7,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

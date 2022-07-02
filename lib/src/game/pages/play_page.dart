@@ -30,7 +30,7 @@ class PlayPage extends StatelessWidget {
         } else if (gameState is GameFinished) {
           finised = true;
           win = gameState.win();
-          if(win) {
+          if (win) {
             BlocProvider.of<SoundBloc>(context).add(PlaySound(SoundType.win));
           } else {
             BlocProvider.of<SoundBloc>(context).add(PlaySound(SoundType.lose));
@@ -96,7 +96,6 @@ class HelpArea extends StatefulWidget {
 }
 
 class _HelpAreaState extends State<HelpArea> {
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HelpMenuBloc, HelpMenuState>(
@@ -234,7 +233,7 @@ class TopBar extends StatelessWidget {
             children: [
               CardDeck(
                 cards: deck,
-                key: ValueKey(deck.last + 1000),
+                key: ValueKey((deck.isNotEmpty ? deck.last : 0) + 1000),
               ),
               const Spacer(),
               CircleIconButton(

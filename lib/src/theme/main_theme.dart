@@ -71,6 +71,15 @@ ThemeData mainTheme = ThemeData.light().copyWith(
       buttonColor: accentColor,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
   iconTheme: const IconThemeData(color: textColor),
+  sliderTheme: SliderThemeData(
+    activeTrackColor: accentColor,
+    activeTickMarkColor: accentColor,
+    trackHeight: 10.0,
+    overlayColor: accentColor.withOpacity(.5),
+    thumbColor: accentColor,
+    inactiveTrackColor: accentColor.withOpacity(.5),
+    inactiveTickMarkColor: accentColor.withOpacity(.5),
+  ),
   scaffoldBackgroundColor: backgroundColor,
   appBarTheme: const AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle(

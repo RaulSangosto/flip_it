@@ -44,6 +44,7 @@ class MainMenuPage extends StatelessWidget {
             ),
             const Spacer(),
             const Text("Created by Raúl"),
+            const Text("Sound Effects by Kenney"),
             const SizedBox(
               height: 50,
             ),

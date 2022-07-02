@@ -27,8 +27,20 @@ Color getCardColor(int card) {
     Colors.blueAccent,
     darkColor,
   ];
+
+  final colors3 = [
+    backgroundColor,
+    green,
+    Colors.cyan[200] ?? Colors.cyan,
+    Colors.pink[200] ?? Colors.pink,
+    Colors.grey[350] ?? Colors.redAccent,
+    purple, //Colors.orange[300] ?? Colors.orange,
+    Colors.teal[200] ?? Colors.teal,
+    Colors.indigo[400] ?? Colors.indigo,
+    darkColor,
+  ];
   if (card <= 0) return getSpecialCardsColor(card);
-  return colors2[(card / 10).floor()];
+  return colors3[(card / 10).floor()];
 }
 
 Color? getBorderCardColor(int card) {

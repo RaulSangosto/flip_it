@@ -92,7 +92,7 @@ class _HandCardState extends State<HandCard> {
         if (state.open && !selected) {
           opacity = .7;
           border = cardBorder;
-        } else {
+        } else if (state.open && selected) {
           opacity = 1.0;
           if (cardBorder == null) {
             border = white;

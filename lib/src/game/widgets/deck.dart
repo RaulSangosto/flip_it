@@ -27,7 +27,7 @@ class CardDeck extends StatelessWidget {
         if (state.open && !selected) {
           opacity = .7;
           border = null;
-        } else {
+        } else if (state.open && selected) {
           opacity = 1.0;
           border = white;
         }
@@ -62,10 +62,9 @@ class CardDeck extends StatelessWidget {
                           )
                         : Opacity(
                             opacity: 0.2,
-                            child: FlipGameCard(
+                            child: GameCard(
                               selected: selected,
                               color: Theme.of(context).backgroundColor,
-                              controller: controller,
                               content: const Center(),
                             ),
                           ),

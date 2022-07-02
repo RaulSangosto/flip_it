@@ -73,7 +73,9 @@ class VolumeControls extends StatelessWidget {
                     BlocProvider.of<SoundBloc>(context)
                         .add(ToggleMusicVolume());
                   },
-                  icon: const Icon(Icons.music_note_rounded),
+                  icon: Icon(state.musicMute()
+                      ? Icons.music_off_rounded
+                      : Icons.music_note_rounded),
                 )
               ],
             ),
@@ -93,7 +95,19 @@ class VolumeControls extends StatelessWidget {
                     BlocProvider.of<SoundBloc>(context)
                         .add(ToggleSoundVolume());
                   },
-                  icon: const Icon(Icons.graphic_eq_rounded),
+                  icon: Icon(state.soundMute()
+                      ? Icons.volume_off_rounded
+                      : Icons.volume_up_rounded),
+                )
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Expanded(child: Text("Credits")),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.badge_rounded),
                 )
               ],
             ),

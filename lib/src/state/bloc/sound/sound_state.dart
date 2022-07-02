@@ -28,8 +28,9 @@ List<String> selectSounds = [
   "sounds/ui/drop_003.ogg",
 ];
 List<String> specialSounds = [
-  "sounds/ui/select_005.ogg",
-  "sounds/ui/select_004.ogg",
+  "sounds/ui/confirmation_003.ogg"
+  // "sounds/ui/select_005.ogg",
+  // "sounds/ui/select_004.ogg",
 ];
 List<String> winSounds = ["sounds/ui/confirmation_002.ogg"];
 List<String> loseSounds = ["sounds/ui/minimize_006.ogg"];
@@ -45,19 +46,31 @@ abstract class SoundState {
   final List<AudioPlayer> audioPlayers;
   static final playerCache = AudioCache();
 
-  const SoundState(
+  SoundState(
     this.musicVolume,
     this.soundVolume,
     this.poliphony,
     this.audioPlayers,
     this.activeAudioPlayer,
-  );
+  ) {
+    for (var audioPlayer in audioPlayers) {
+      audioPlayer.setPlayerMode(PlayerMode.lowLatency);
+    }
+  }
+
+  bool musicMute() => musicVolume == 0;
+
+  bool soundMute() => soundVolume == 0;
 
   void playSound(SoundType type) async {
+    final audioPlayer =
+        audioPlayers[activeAudioPlayer.clamp(0, audioPlayers.length - 1)];
+    audioPlayer.stop();
+    // audioPlayer.setPlayerMode(PlayerMode.lowLatency);
     debugPrint(activeAudioPlayer.toString());
-    audioPlayers[activeAudioPlayer.clamp(0, audioPlayers.length - 1)].play(
+    audioPlayer.play(
       await _getRandomSoundType(type),
-      volume: musicVolume,
+      volume: soundVolume,
     );
   }
 
@@ -102,15 +115,11 @@ class SoundInitial extends SoundState {
 }
 
 class SoundActive extends SoundState {
-  const SoundActive(
+  SoundActive(
     super.musicVolume,
     super.soundVolume,
     super.poliphony,
     super.audioPlayers,
     super.activeAudioPlayer,
   );
-
-  bool musicMute() => musicVolume == 0;
-
-  bool soundMute() => soundVolume == 0;
 }
