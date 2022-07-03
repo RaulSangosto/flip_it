@@ -241,7 +241,6 @@ class TopBar extends StatelessWidget {
                 radius: 40,
                 onPressed: () {
                   Scaffold.of(context).openEndDrawer();
-                  // Navigator.popUntil(context, ModalRoute.withName('/'));
                 },
                 icon: Icon(
                   Icons.grid_view_rounded,

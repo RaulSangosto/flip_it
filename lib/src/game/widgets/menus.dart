@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../state/bloc/game/game_bloc.dart';
 import '../../theme/main_theme.dart';
@@ -23,14 +24,14 @@ class LoseMenu extends StatelessWidget {
               flex: 10,
             ),
             ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/options'),
+              onPressed: () => GoRouter.of(context).pushNamed('options'),
               child: const Text("Settings"),
             ),
             const Spacer(),
             ElevatedButton(
               onPressed: () {
                 BlocProvider.of<GameBloc>(context).add(ResetGame());
-                Navigator.popUntil(context, ModalRoute.withName('/'));
+                GoRouter.of(context).goNamed('/');
               },
               child: const Text("Go To Menu"),
             ),
@@ -78,7 +79,7 @@ class WinMenu extends StatelessWidget {
               ),
               ElevatedButton(
                 style: secondaryButton,
-                onPressed: () => Navigator.pushNamed(context, '/options'),
+                onPressed: () => GoRouter.of(context).pushNamed('options'),
                 child: const Text("Settings"),
               ),
               const Spacer(),
@@ -86,7 +87,7 @@ class WinMenu extends StatelessWidget {
                 style: secondaryButton,
                 onPressed: () {
                   BlocProvider.of<GameBloc>(context).add(ResetGame());
-                  Navigator.popUntil(context, ModalRoute.withName('/'));
+                  GoRouter.of(context).goNamed('/');
                 },
                 child: const Text("Go to Menu"),
               ),
@@ -148,14 +149,14 @@ class DrawerMenu extends StatelessWidget {
             flex: 2,
           ),
           Text(
-            "Settings",
+            "Options",
             style: deckTextStyle,
           ),
           const Spacer(),
           ElevatedButton(
             onPressed: () {
               Scaffold.of(context).closeEndDrawer();
-              Navigator.pushNamed(context, "/options");
+              GoRouter.of(context).pushNamed('options');
             },
             style: secondaryButton,
             child: const Text("Settings"),
@@ -175,7 +176,7 @@ class DrawerMenu extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               Scaffold.of(context).closeEndDrawer();
-              Navigator.popUntil(context, ModalRoute.withName('/'));
+              GoRouter.of(context).goNamed('main menu');
             },
             style: secondaryButton,
             child: const Text("Exit"),

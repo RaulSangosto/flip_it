@@ -1,5 +1,6 @@
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MainMenuPage extends StatelessWidget {
   MainMenuPage({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class MainMenuPage extends StatelessWidget {
       appBar: AppBar(actions: [
         IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/options');
+              GoRouter.of(context).pushNamed('options');
             },
             icon: const Icon(Icons.settings))
       ]),
@@ -38,7 +39,7 @@ class MainMenuPage extends StatelessWidget {
             const Spacer(),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/board/play');
+                GoRouter.of(context).pushNamed('play');
               },
               child: const Text("Play"),
             ),
