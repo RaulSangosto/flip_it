@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:crossingwords/src/state/bloc/game/model/card_collection.dart';
 import 'package:crossingwords/src/state/bloc/sound/sound_bloc.dart';
 import 'package:crossingwords/src/theme/main_theme.dart';
@@ -5,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../state/bloc/game/game_bloc.dart';
 import '../../state/bloc/help_menu/helpmenu_bloc.dart';
+import '../../ui/background.dart';
 import '../../ui/widgets.dart';
 import '../widgets/card_group.dart';
 import '../widgets/deck.dart';
@@ -18,70 +22,85 @@ class PlayPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var finised = false;
     var win = false;
-    return BlocBuilder<GameBloc, GameState>(
-      builder: (context, gameState) {
-        if ((gameState is GameInitial || gameState is GamePlaying) &&
-            gameState.cards.isNotEmpty) {
-          finised = false;
-          win = false;
-          if (gameState.hand.length < 8) {
-            BlocProvider.of<GameBloc>(context).add(DrawCards());
-          }
-        } else if (gameState is GameFinished) {
-          finised = true;
-          win = gameState.win();
-          if (win) {
-            BlocProvider.of<SoundBloc>(context).add(PlaySound(SoundType.win));
-          } else {
-            BlocProvider.of<SoundBloc>(context).add(PlaySound(SoundType.lose));
-          }
-        }
-        return Scaffold(
-          endDrawer: const DrawerMenu(),
-          body: BlocBuilder<HelpMenuBloc, HelpMenuState>(
-            builder: (context, helpMenuState) {
-              return Stack(
-                children: [
-                  Opacity(
-                    opacity: helpMenuState.open ? .8 : 0,
-                    child: Container(
-                      color: darkColor,
-                    ),
-                  ),
-                  SafeArea(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                            flex: 3,
-                            child: TopBar(deck: gameState.cards),
+    return BluredBackground(
+      child: Container(
+        color: Colors.transparent,
+        child: BlocBuilder<GameBloc, GameState>(
+          builder: (context, gameState) {
+            if ((gameState is GameInitial || gameState is GamePlaying) &&
+                gameState.cards.isNotEmpty) {
+              finised = false;
+              win = false;
+              if (gameState.hand.length < 8) {
+                BlocProvider.of<GameBloc>(context).add(DrawCards());
+              }
+            } else if (gameState is GameFinished) {
+              finised = true;
+              win = gameState.win();
+              if (win) {
+                BlocProvider.of<SoundBloc>(context)
+                    .add(PlaySound(SoundType.win));
+              } else {
+                BlocProvider.of<SoundBloc>(context)
+                    .add(PlaySound(SoundType.lose));
+              }
+            }
+            return Scaffold(
+              onEndDrawerChanged: (isOpened) {
+                BlocProvider.of<SoundBloc>(context).add(
+                    PlaySound(isOpened ? SoundType.open : SoundType.close));
+              },
+              backgroundColor: Colors.transparent,
+              endDrawer: const DrawerMenu(),
+              body: BlocBuilder<HelpMenuBloc, HelpMenuState>(
+                builder: (context, helpMenuState) {
+                  return Stack(
+                    children: [
+                      Visibility(
+                        visible: helpMenuState.open,
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
+                          child: Container(
+                            color: darkColor.withOpacity(0.7),
                           ),
-                          Expanded(
-                            flex: 4,
-                            child: PlayCardZone(
-                                collections: gameState.collections),
-                          ),
-                          Expanded(
-                            flex: 6,
-                            child: HandCards(
-                              cards: gameState.hand,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                  const HelpArea(),
-                  finised ? _getFinishMenu(win) : const SizedBox.shrink(),
-                ],
-              );
-            },
-          ),
-        );
-      },
+                      SafeArea(
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
+                                flex: 3,
+                                child: TopBar(deck: gameState.cards),
+                              ),
+                              Expanded(
+                                flex: 4,
+                                child: PlayCardZone(
+                                    collections: gameState.collections),
+                              ),
+                              Expanded(
+                                flex: 6,
+                                child: HandCards(
+                                  cards: gameState.hand,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const HelpArea(),
+                      finised ? _getFinishMenu(win) : const SizedBox.shrink(),
+                    ],
+                  );
+                },
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
@@ -138,9 +157,18 @@ class _HelpAreaState extends State<HelpArea> {
                           ),
                           CircleIconButton(
                               backgroundColor: accentColor,
-                              onPressed: () =>
-                                  BlocProvider.of<HelpMenuBloc>(context)
-                                      .add(ToggleMenu()),
+                              onPressed: () {
+                                BlocProvider.of<HelpMenuBloc>(context)
+                                    .add(ToggleMenu());
+                                BlocProvider.of<SoundBloc>(context).add(
+                                    PlaySound(helpMenuState.open
+                                        ? SoundType.closeHelp
+                                        : SoundType.openHelp));
+                                BlocProvider.of<SoundBloc>(context).add(
+                                    helpMenuState.open
+                                        ? StopTalkHelper()
+                                        : StartTalkHelper());
+                              },
                               icon: Icon(
                                 !helpMenuState.open
                                     ? Icons.lightbulb_outline_rounded
@@ -161,12 +189,24 @@ class _HelpAreaState extends State<HelpArea> {
                                 alignment: WrapAlignment.center,
                                 runAlignment: WrapAlignment.center,
                                 children: [
-                                  Text(
-                                    helpMenuState.message,
-                                    overflow: TextOverflow.clip,
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600),
+                                  AnimatedTextKit(
+                                    key: ValueKey<Key?>(
+                                        helpMenuState.selectedWidget),
+                                    isRepeatingAnimation: false,
+                                    pause: Duration.zero,
+                                    animatedTexts: [
+                                      TypewriterAnimatedText(
+                                        speed: const Duration(milliseconds: 40),
+                                        helpMenuState.message,
+                                        //overflow: TextOverflow.clip,
+                                        textStyle: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600),
+                                      )
+                                    ],
+                                    onFinished: () =>
+                                        BlocProvider.of<SoundBloc>(context)
+                                            .add(StopTalkHelper()),
                                   ),
                                 ],
                               )
