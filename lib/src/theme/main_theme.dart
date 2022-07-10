@@ -5,6 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 const Color purple = Color(0xffc0b6ff);
 const Color green = Color(0xffceff67);
 const Color white = Color(0xfff7f7f7);
+const Color grey = Color(0xffCDD0D8);
+const Color lightGreen = Color(0xffE7FFDB);
+const Color lightPurple = Color(0xffC9C5DF);
 const Color darkgrey = Color.fromARGB(255, 37, 51, 56);
 const Color black = Color(0xff252727);
 const Color blue = Color.fromRGBO(130, 177, 255, 1);
@@ -16,37 +19,54 @@ const Color textColor = darkColor; //Colors.white;
 const accentColor = green;
 const secondaryColor = purple; //Colors.amber;
 
-final TextStyle cardTextStyle = GoogleFonts.inter(
+final TextStyle bodyTextStyle = GoogleFonts.poppins(
   color: textColor,
-  fontSize: 24,
-  fontWeight: FontWeight.bold,
+  fontSize: 14,
+  fontWeight: FontWeight.normal,
 );
 
-final TextStyle deckTextStyle = GoogleFonts.inter(
+final TextStyle bodyTextWhiteStyle = bodyTextStyle.copyWith(
   color: white,
-  fontSize: 24,
+);
+
+final TextStyle cardTextStyle = GoogleFonts.poppins(
+  color: textColor,
+  fontSize: 20,
   fontWeight: FontWeight.bold,
 );
 
-final ButtonStyle primaryButton = ButtonStyle(
-    padding: MaterialStateProperty.all<EdgeInsets>(
-        const EdgeInsets.symmetric(horizontal: 50, vertical: 15)),
-    textStyle: MaterialStateProperty.all<TextStyle>(
-        const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-    backgroundColor: MaterialStateProperty.all<Color>(darkColor),
-    foregroundColor: MaterialStateProperty.all<Color>(white));
+final TextStyle deckTextStyle = GoogleFonts.poppins(
+  color: white,
+  fontSize: 20,
+  fontWeight: FontWeight.bold,
+);
 
-final ButtonStyle secondaryButton = ButtonStyle(
-    padding: MaterialStateProperty.all<EdgeInsets>(
-        const EdgeInsets.symmetric(horizontal: 50, vertical: 15)),
-    textStyle: MaterialStateProperty.all<TextStyle>(
-        const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-    backgroundColor: MaterialStateProperty.all<Color>(accentColor),
-    foregroundColor: MaterialStateProperty.all<Color>(darkColor));
+const OutlinedBorder buttonShape =
+    RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20)));
+
+final ButtonStyle primaryButtonStyle = ElevatedButton.styleFrom(
+  padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 20),
+  textStyle: cardTextStyle,
+  onPrimary: white,
+  primary: darkColor,
+  shape: buttonShape,
+  surfaceTintColor: white,
+  splashFactory: InkSparkle.splashFactory,
+);
+
+final ButtonStyle secondaryButton = ElevatedButton.styleFrom(
+  padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 20),
+  textStyle: cardTextStyle,
+  onPrimary: darkColor,
+  primary: green,
+  shape: buttonShape,
+  surfaceTintColor: white,
+  splashFactory: InkSparkle.splashFactory,
+);
 
 ThemeData mainTheme = ThemeData.light().copyWith(
   backgroundColor: backgroundColor,
-  brightness: Brightness.dark,
+  brightness: Brightness.light,
   primaryColor: accentColor,
   dialogTheme: const DialogTheme(
       titleTextStyle:
@@ -65,7 +85,7 @@ ThemeData mainTheme = ThemeData.light().copyWith(
     style:
         ButtonStyle(foregroundColor: MaterialStateProperty.all<Color>(black)),
   ),
-  elevatedButtonTheme: ElevatedButtonThemeData(style: primaryButton),
+  elevatedButtonTheme: ElevatedButtonThemeData(style: primaryButtonStyle),
   buttonTheme: const ButtonThemeData(
       textTheme: ButtonTextTheme.primary,
       buttonColor: accentColor,
@@ -84,10 +104,10 @@ ThemeData mainTheme = ThemeData.light().copyWith(
   appBarTheme: const AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarBrightness: Brightness.dark,
-        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.dark,
       ),
       elevation: 0,
-      color: backgroundColor,
+      color: Colors.transparent,
       actionsIconTheme: IconThemeData(color: textColor)),
 );

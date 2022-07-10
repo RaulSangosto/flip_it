@@ -33,7 +33,7 @@ Color getCardColor(int card) {
     green,
     Colors.cyan[200] ?? Colors.cyan,
     Colors.pink[200] ?? Colors.pink,
-    Colors.grey[350] ?? Colors.redAccent,
+    grey,
     purple, //Colors.orange[300] ?? Colors.orange,
     Colors.teal[200] ?? Colors.teal,
     Colors.indigo[400] ?? Colors.indigo,
@@ -184,10 +184,7 @@ class GameCard extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         child: AspectRatio(
           aspectRatio: 7 / 12,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: content,
-          ),
+          child: content,
         ),
       ),
     );
