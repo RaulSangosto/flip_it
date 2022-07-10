@@ -1,9 +1,11 @@
 import 'package:crossingwords/src/main_menu/pages/main_menu_page.dart';
+import 'package:crossingwords/src/options/pages/credits.dart';
 import 'package:crossingwords/src/options/pages/option_page.dart';
 import 'package:crossingwords/src/state/bloc/help_menu/helpmenu_bloc.dart';
 import 'package:crossingwords/src/theme/main_theme.dart';
 import 'package:crossingwords/src/ui/my_transition.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,30 +21,64 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: '/',
         name: 'main menu',
-        builder: (context, state) => MainMenuPage(key: const Key('main menu')),
+        builder: (context, state) => AnnotatedRegion<SystemUiOverlayStyle>(
+          value: const SystemUiOverlayStyle(
+            statusBarBrightness: Brightness.light,
+            statusBarIconBrightness: Brightness.dark,
+          ),
+          child: MainMenuPage(key: const Key('main menu')),
+        ),
       ),
       GoRoute(
         path: '/board/play',
         name: 'play',
         pageBuilder: (context, state) => buildMyTransition(
-          child: const PlayPage(key: Key('board/play')),
+          child: const AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle(
+              statusBarBrightness: Brightness.light,
+              statusBarIconBrightness: Brightness.dark,
+            ),
+            child: PlayPage(key: Key('board/play')),
+          ),
           color: darkColor,
         ),
       ),
       GoRoute(
-        path: '/options',
-        name: 'options',
-        pageBuilder: (context, state) => buildMyTransition(
-          child: const OptionsPage(key: Key('options')),
-          color: darkColor,
-        ),
-      ),
+          path: '/options',
+          name: 'options',
+          pageBuilder: (context, state) => buildMyTransition(
+                child: const AnnotatedRegion<SystemUiOverlayStyle>(
+                  value: SystemUiOverlayStyle(
+                    statusBarBrightness: Brightness.dark,
+                    statusBarIconBrightness: Brightness.light,
+                  ),
+                  child: OptionsPage(key: Key('options')),
+                ),
+                color: darkColor,
+              ),
+          routes: [
+            GoRoute(
+              path: 'options/credits',
+              name: 'credits',
+              pageBuilder: (context, state) => buildMyTransition(
+                child: const AnnotatedRegion<SystemUiOverlayStyle>(
+                  value: SystemUiOverlayStyle(
+                    statusBarBrightness: Brightness.dark,
+                    statusBarIconBrightness: Brightness.light,
+                  ),
+                  child: CreditsPage(key: Key('credits')),
+                ),
+                color: white,
+              ),
+            ),
+          ]),
     ],
   );
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    precacheImage(const AssetImage("assets/images/Logo_text.png"), context);
     return MultiBlocProvider(
       providers: [
         BlocProvider<GameBloc>(
@@ -58,14 +94,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        //initialRoute: '/',
         routeInformationParser: _router.routeInformationParser,
         routerDelegate: _router.routerDelegate,
-        // routes: [
-        //   '/': (context) => MainMenuPage(),
-        //   '/board/play': (context) => const PlayPage(),
-        //   '/options': (context) => const OptionsPage(),
-        // ],
         theme: mainTheme,
       ),
     );

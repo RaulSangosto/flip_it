@@ -31,14 +31,15 @@ class LoseMenu extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 BlocProvider.of<GameBloc>(context).add(ResetGame());
-                GoRouter.of(context).goNamed('/');
+                GoRouter.of(context).goNamed('main menu');
               },
               child: const Text("Go To Menu"),
             ),
             const Spacer(),
             ElevatedButton(
-              onPressed: () =>
-                  BlocProvider.of<GameBloc>(context).add(ResetGame()),
+              onPressed: () {
+                BlocProvider.of<GameBloc>(context).add(ResetGame());
+              },
               child: const Text("Play Again"),
             ),
             const Spacer(
@@ -142,55 +143,66 @@ class DrawerMenu extends StatelessWidget {
     return Drawer(
       width: MediaQuery.of(context).size.width - 60,
       backgroundColor: darkColor,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: ListView(
+        padding: const EdgeInsets.all(15.0),
         children: [
-          const Spacer(
-            flex: 2,
+          DrawerHeader(
+            child: Center(
+              child: Text(
+                "Options",
+                style: deckTextStyle,
+              ),
+            ),
           ),
-          Text(
-            "Options",
-            style: deckTextStyle,
+          ListTile(
+            title: ElevatedButton(
+              onPressed: () {
+                Scaffold.of(context).closeEndDrawer();
+                GoRouter.of(context).pushNamed('options');
+              },
+              style: secondaryButton,
+              child: const Text("Settings"),
+            ),
           ),
-          const Spacer(),
-          ElevatedButton(
-            onPressed: () {
-              Scaffold.of(context).closeEndDrawer();
-              GoRouter.of(context).pushNamed('options');
-            },
-            style: secondaryButton,
-            child: const Text("Settings"),
+          const SizedBox(
+            height: 20,
           ),
-          const SizedBox(height: 50),
-          ElevatedButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (_) => const RestartGameDialog(),
-              ).then((value) => Scaffold.of(context).closeEndDrawer());
-            },
-            style: secondaryButton,
-            child: const Text("Restart"),
+          ListTile(
+            title: ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (_) => const RestartGameDialog(),
+                ).then((value) => Scaffold.of(context).closeEndDrawer());
+              },
+              style: secondaryButton,
+              child: const Text("Restart"),
+            ),
           ),
-          const SizedBox(height: 50),
-          ElevatedButton(
-            onPressed: () {
-              Scaffold.of(context).closeEndDrawer();
-              GoRouter.of(context).goNamed('main menu');
-            },
-            style: secondaryButton,
-            child: const Text("Exit"),
+          const SizedBox(
+            height: 20,
           ),
-          const SizedBox(height: 100),
-          ElevatedButton(
-            onPressed: () {
-              Scaffold.of(context).closeEndDrawer();
-            },
-            style: secondaryButton,
-            child: const Text("Resume"),
+          ListTile(
+            title: ElevatedButton(
+              onPressed: () {
+                Scaffold.of(context).closeEndDrawer();
+                GoRouter.of(context).goNamed('main menu');
+              },
+              style: secondaryButton,
+              child: const Text("Exit"),
+            ),
           ),
-          const Spacer(
-            flex: 2,
+          const SizedBox(
+            height: 20,
+          ),
+          ListTile(
+            title: ElevatedButton(
+              onPressed: () {
+                Scaffold.of(context).closeEndDrawer();
+              },
+              style: secondaryButton,
+              child: const Text("Resume"),
+            ),
           ),
         ],
       ),
