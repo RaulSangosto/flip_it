@@ -129,8 +129,7 @@ class _HandCardState extends State<HandCard> {
           onTap: () {
             if (state.open && widget.key != null) {
               if (!selected) {
-                BlocProvider.of<SoundBloc>(context)
-                    .add(PlaySound(SoundType.select));
+                BlocProvider.of<SoundBloc>(context).add(SelectHelperItem());
               }
               BlocProvider.of<HelpMenuBloc>(context)
                   .add(SelectCardMenu(widget.card, widget.key!));

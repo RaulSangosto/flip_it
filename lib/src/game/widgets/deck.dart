@@ -40,8 +40,7 @@ class CardDeck extends StatelessWidget {
               onTap: () {
                 if (state.open && key != null) {
                   if (!selected) {
-                    BlocProvider.of<SoundBloc>(context)
-                        .add(PlaySound(SoundType.select));
+                    BlocProvider.of<SoundBloc>(context).add(SelectHelperItem());
                   }
                   BlocProvider.of<HelpMenuBloc>(context)
                       .add(SelectCardDeckMenu(cards, key!));

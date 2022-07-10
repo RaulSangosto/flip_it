@@ -11,9 +11,14 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> {
   SoundBloc() : super(SoundInitial()) {
     on<ToggleMusicVolume>((event, emit) => emit(_toggleMusicVolume(event)));
     on<ToggleSoundVolume>((event, emit) => emit(_toggleSoundVolume(event)));
+    on<ToggleHelperVolume>((event, emit) => emit(_toggleHelperVolume(event)));
     on<SetMusicVolume>((event, emit) => emit(_setMusicVolume(event)));
     on<SetSoundVolume>((event, emit) => emit(_setSoundVolume(event)));
+    on<SetHelperVolume>((event, emit) => emit(_setHelperVolume(event)));
     on<PlaySound>((event, emit) => emit(_playSound(event)));
+    on<SelectHelperItem>((event, emit) => emit(_selectHelperItem()));
+    on<StartTalkHelper>((event, emit) => emit(_startTalkHelper()));
+    on<StopTalkHelper>((event, emit) => emit(_stopTalkHelper()));
   }
 
   SoundActive _toggleMusicVolume(ToggleMusicVolume event) {
@@ -21,9 +26,11 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> {
     return SoundActive(
       volume,
       state.soundVolume,
+      state.helperVolume,
       state.poliphony,
       state.audioPlayers,
       state.activeAudioPlayer,
+      state.helperAudioPlayer,
     );
   }
 
@@ -32,9 +39,24 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> {
     return SoundActive(
       state.musicVolume,
       volume,
+      state.helperVolume,
       state.poliphony,
       state.audioPlayers,
       state.activeAudioPlayer,
+      state.helperAudioPlayer,
+    );
+  }
+
+  SoundActive _toggleHelperVolume(ToggleHelperVolume event) {
+    final double volume = state.helperVolume == 0.0 ? 0.5 : 0.0;
+    return SoundActive(
+      state.musicVolume,
+      state.soundVolume,
+      volume,
+      state.poliphony,
+      state.audioPlayers,
+      state.activeAudioPlayer,
+      state.helperAudioPlayer,
     );
   }
 
@@ -42,9 +64,11 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> {
     return SoundActive(
       event.value.clamp(0.0, 1.0),
       state.soundVolume,
+      state.helperVolume,
       state.poliphony,
       state.audioPlayers,
       state.activeAudioPlayer,
+      state.helperAudioPlayer,
     );
   }
 
@@ -52,9 +76,23 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> {
     return SoundActive(
       state.musicVolume,
       event.value.clamp(0.0, 1.0),
+      state.helperVolume,
       state.poliphony,
       state.audioPlayers,
       state.activeAudioPlayer,
+      state.helperAudioPlayer,
+    );
+  }
+
+  SoundActive _setHelperVolume(SetHelperVolume event) {
+    return SoundActive(
+      state.musicVolume,
+      state.soundVolume,
+      event.value.clamp(0.0, 1.0),
+      state.poliphony,
+      state.audioPlayers,
+      state.activeAudioPlayer,
+      state.helperAudioPlayer,
     );
   }
 
@@ -66,9 +104,56 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> {
     return SoundActive(
       state.musicVolume,
       state.soundVolume,
+      state.helperVolume,
       state.poliphony,
       state.audioPlayers,
       activeAudioPlayer,
+      state.helperAudioPlayer,
+    );
+  }
+
+  SoundState _startTalkHelper() {
+    state.startTalkHelper();
+
+    return SoundActive(
+      state.musicVolume,
+      state.soundVolume,
+      state.helperVolume,
+      state.poliphony,
+      state.audioPlayers,
+      state.activeAudioPlayer,
+      state.helperAudioPlayer,
+    );
+  }
+
+  SoundState _stopTalkHelper() {
+    state.stopTalkHelper();
+
+    return SoundActive(
+      state.musicVolume,
+      state.soundVolume,
+      state.helperVolume,
+      state.poliphony,
+      state.audioPlayers,
+      state.activeAudioPlayer,
+      state.helperAudioPlayer,
+    );
+  }
+  
+  SoundState _selectHelperItem() {
+    state.startTalkHelper();
+    state.playSound(SoundType.select);
+    var activeAudioPlayer = state.activeAudioPlayer + 1;
+    if (activeAudioPlayer >= state.audioPlayers.length) activeAudioPlayer = 0;
+
+    return SoundActive(
+      state.musicVolume,
+      state.soundVolume,
+      state.helperVolume,
+      state.poliphony,
+      state.audioPlayers,
+      activeAudioPlayer,
+      state.helperAudioPlayer,
     );
   }
 }

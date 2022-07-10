@@ -19,8 +19,22 @@ class SetSoundVolume extends SoundEvent {
   SetSoundVolume(this.value);
 }
 
+class ToggleHelperVolume extends SoundEvent {}
+
+class SetHelperVolume extends SoundEvent {
+  final double value;
+
+  SetHelperVolume(this.value);
+}
+
 class PlaySound extends SoundEvent {
   final SoundType sound;
 
   PlaySound(this.sound);
 }
+
+class SelectHelperItem extends SoundEvent {}
+
+class StartTalkHelper extends SoundEvent {}
+
+class StopTalkHelper extends SoundEvent {}
