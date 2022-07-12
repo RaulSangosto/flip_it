@@ -1,9 +1,9 @@
-import 'package:crossingwords/src/theme/main_theme.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../state/bloc/help_menu/helpmenu_bloc.dart';
 import '../../state/bloc/sound/sound_bloc.dart';
+import '../../theme/main_theme.dart';
 import 'game_card.dart';
 
 class CardDeck extends StatelessWidget {

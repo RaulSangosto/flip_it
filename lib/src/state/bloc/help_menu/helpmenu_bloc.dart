@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:crossingwords/src/state/bloc/game/model/card_collection.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../game/widgets/card_group.dart';
 import '../../../game/widgets/game_card.dart';
+import '../game/model/card_collection.dart';
 
 part 'helpmenu_event.dart';
 part 'helpmenu_state.dart';

@@ -1,4 +1,4 @@
-# crossingwords
+# FlipIt
 
 A new Flutter project.
 

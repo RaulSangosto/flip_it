@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:crossingwords/src/theme/main_theme.dart';
+import '../../theme/main_theme.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,6 +1,6 @@
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
-import 'package:crossingwords/src/state/bloc/sound/sound_bloc.dart';
-import 'package:crossingwords/src/theme/main_theme.dart';
+import '../state/bloc/sound/sound_bloc.dart';
+import '../theme/main_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,11 +17,21 @@ class _LogoAnimatedState extends State<LogoAnimated>
     duration: const Duration(seconds: 1),
     vsync: this,
   );
+  late Image logo;
+
   @override
   void initState() {
+    logo = Image.asset("assets/images/Logo_text.png");
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    precacheImage(logo.image, context);
     _controller.forward();
     BlocProvider.of<SoundBloc>(context).add(PlaySound(SoundType.logoOpen));
-    super.initState();
   }
 
   @override
@@ -34,10 +44,11 @@ class _LogoAnimatedState extends State<LogoAnimated>
   Widget build(BuildContext context) {
     const startRotation = -.03;
     const duration = 350;
+
     return AnimatedBuilder(
       animation: _controller,
-      child: Image.asset(
-        "assets/images/Logo_text.png",
+      child: Image(
+        image: logo.image,
         fit: BoxFit.fill,
         width: double.infinity,
       ),

@@ -1,18 +1,18 @@
 import 'dart:ui';
-
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:crossingwords/src/state/bloc/game/model/card_collection.dart';
-import 'package:crossingwords/src/state/bloc/sound/sound_bloc.dart';
-import 'package:crossingwords/src/theme/main_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../state/bloc/game/game_bloc.dart';
+import '../../state/bloc/game/model/card_collection.dart';
 import '../../state/bloc/help_menu/helpmenu_bloc.dart';
+import '../../state/bloc/sound/sound_bloc.dart';
+import '../../theme/main_theme.dart';
 import '../../ui/background.dart';
 import '../../ui/widgets.dart';
+import '../utils.dart';
 import '../widgets/card_group.dart';
 import '../widgets/deck.dart';
 import '../widgets/hand_cards.dart';
+import '../widgets/help_area.dart';
 import '../widgets/menus.dart';
 
 class PlayPage extends StatelessWidget {
@@ -27,23 +27,17 @@ class PlayPage extends StatelessWidget {
         color: Colors.transparent,
         child: BlocBuilder<GameBloc, GameState>(
           builder: (context, gameState) {
-            if ((gameState is GameInitial || gameState is GamePlaying) &&
-                gameState.cards.isNotEmpty) {
-              finised = false;
-              win = false;
-              if (gameState.hand.length < 8) {
-                BlocProvider.of<GameBloc>(context).add(DrawCards());
-              }
-            } else if (gameState is GameFinished) {
-              finised = true;
-              win = gameState.win();
-              if (win) {
-                BlocProvider.of<SoundBloc>(context)
-                    .add(PlaySound(SoundType.win));
-              } else {
-                BlocProvider.of<SoundBloc>(context)
-                    .add(PlaySound(SoundType.lose));
-              }
+            finised = gameFinished(gameState);
+            win = gameWon(gameState);
+            if (!finised &&
+                gameState.cards.isNotEmpty &&
+                gameState.hand.length < 8) {
+              BlocProvider.of<GameBloc>(context).add(DrawCards());
+            } else if (finised && win) {
+              BlocProvider.of<SoundBloc>(context).add(PlaySound(SoundType.win));
+            } else if (finised && !win) {
+              BlocProvider.of<SoundBloc>(context)
+                  .add(PlaySound(SoundType.lose));
             }
             return Scaffold(
               onEndDrawerChanged: (isOpened) {
@@ -91,8 +85,11 @@ class PlayPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const HelpArea(),
                       finised ? _getFinishMenu(win) : const SizedBox.shrink(),
+                      HelpArea(
+                        finished: finised,
+                        win: win,
+                      ),
                     ],
                   );
                 },
@@ -101,125 +98,6 @@ class PlayPage extends StatelessWidget {
           },
         ),
       ),
-    );
-  }
-}
-
-class HelpArea extends StatefulWidget {
-  const HelpArea({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<HelpArea> createState() => _HelpAreaState();
-}
-
-class _HelpAreaState extends State<HelpArea> {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<HelpMenuBloc, HelpMenuState>(
-      builder: (context, helpMenuState) {
-        return Positioned(
-          bottom: 20,
-          left: 10,
-          child: AnimatedContainer(
-            width: helpMenuState.open
-                ? MediaQuery.of(context).size.width - 20
-                : 140,
-            height: helpMenuState.open ? 150 : 60,
-            duration: const Duration(milliseconds: 200),
-            child: Card(
-              clipBehavior: Clip.hardEdge,
-              elevation: 0,
-              color: helpMenuState.open ? white : backgroundColor,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(40)),
-                side: BorderSide(color: darkColor, width: 2),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Padding(
-                padding: EdgeInsets.all(helpMenuState.open ? 15.0 : 10.0),
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: helpMenuState.open ? 1 : 100,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          AnimatedContainer(
-                            duration: const Duration(milliseconds: 200),
-                            width: helpMenuState.open ? 80 : 40,
-                            height: helpMenuState.open ? 50 : 40,
-                            decoration: BoxDecoration(
-                                color: black,
-                                borderRadius: BorderRadius.circular(20)),
-                          ),
-                          CircleIconButton(
-                              backgroundColor: accentColor,
-                              onPressed: () {
-                                BlocProvider.of<HelpMenuBloc>(context)
-                                    .add(ToggleMenu());
-                                BlocProvider.of<SoundBloc>(context).add(
-                                    PlaySound(helpMenuState.open
-                                        ? SoundType.closeHelp
-                                        : SoundType.openHelp));
-                                BlocProvider.of<SoundBloc>(context).add(
-                                    helpMenuState.open
-                                        ? StopTalkHelper()
-                                        : StartTalkHelper());
-                              },
-                              icon: Icon(
-                                !helpMenuState.open
-                                    ? Icons.lightbulb_outline_rounded
-                                    : Icons.close_rounded,
-                                color: Theme.of(context).iconTheme.color,
-                                size: 30,
-                              ))
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: AnimatedContainer(
-                        height: helpMenuState.open ? double.maxFinite : 0,
-                        width: helpMenuState.open ? double.maxFinite : 0,
-                        duration: const Duration(milliseconds: 200),
-                        child: helpMenuState.open
-                            ? Wrap(
-                                alignment: WrapAlignment.center,
-                                runAlignment: WrapAlignment.center,
-                                children: [
-                                  AnimatedTextKit(
-                                    key: ValueKey<Key?>(
-                                        helpMenuState.selectedWidget),
-                                    isRepeatingAnimation: false,
-                                    pause: Duration.zero,
-                                    animatedTexts: [
-                                      TypewriterAnimatedText(
-                                        speed: const Duration(milliseconds: 40),
-                                        helpMenuState.message,
-                                        //overflow: TextOverflow.clip,
-                                        textStyle: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600),
-                                      )
-                                    ],
-                                    onFinished: () =>
-                                        BlocProvider.of<SoundBloc>(context)
-                                            .add(StopTalkHelper()),
-                                  ),
-                                ],
-                              )
-                            : const SizedBox.shrink(),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 }

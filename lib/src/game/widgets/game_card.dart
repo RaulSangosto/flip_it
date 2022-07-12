@@ -1,4 +1,4 @@
-import 'package:crossingwords/src/theme/main_theme.dart';
+import '../../theme/main_theme.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';

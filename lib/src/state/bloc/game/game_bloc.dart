@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:crossingwords/src/state/bloc/game/model/card_collection.dart';
 import 'package:meta/meta.dart';
+
+import 'model/card_collection.dart';
 
 part 'game_event.dart';
 part 'game_state.dart';

@@ -1,3 +1,4 @@
+import 'package:flipit/src/state/bloc/sound/sound_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -5,6 +6,22 @@ import 'package:go_router/go_router.dart';
 import '../../state/bloc/game/game_bloc.dart';
 import '../../theme/main_theme.dart';
 import 'confetti.dart';
+
+void _goSettings(BuildContext context) {
+  GoRouter.of(context).pushNamed('options');
+  BlocProvider.of<SoundBloc>(context).add(PlaySound(SoundType.close));
+}
+
+void _goRetry(BuildContext context) {
+  BlocProvider.of<GameBloc>(context).add(ResetGame());
+  BlocProvider.of<SoundBloc>(context).add(PlaySound(SoundType.closeHelp));
+}
+
+void _goMainMenu(BuildContext context) {
+  BlocProvider.of<GameBloc>(context).add(ResetGame());
+  BlocProvider.of<SoundBloc>(context).add(PlaySound(SoundType.logoOpen));
+  GoRouter.of(context).goNamed('main menu');
+}
 
 class LoseMenu extends StatelessWidget {
   const LoseMenu({
@@ -24,22 +41,17 @@ class LoseMenu extends StatelessWidget {
               flex: 10,
             ),
             ElevatedButton(
-              onPressed: () => GoRouter.of(context).pushNamed('options'),
+              onPressed: () => _goSettings(context),
               child: const Text("Settings"),
             ),
             const Spacer(),
             ElevatedButton(
-              onPressed: () {
-                BlocProvider.of<GameBloc>(context).add(ResetGame());
-                GoRouter.of(context).goNamed('main menu');
-              },
+              onPressed: () => _goMainMenu(context),
               child: const Text("Go To Menu"),
             ),
             const Spacer(),
             ElevatedButton(
-              onPressed: () {
-                BlocProvider.of<GameBloc>(context).add(ResetGame());
-              },
+              onPressed: () => _goRetry(context),
               child: const Text("Play Again"),
             ),
             const Spacer(
@@ -80,23 +92,19 @@ class WinMenu extends StatelessWidget {
               ),
               ElevatedButton(
                 style: secondaryButton,
-                onPressed: () => GoRouter.of(context).pushNamed('options'),
+                onPressed: () => _goSettings(context),
                 child: const Text("Settings"),
               ),
               const Spacer(),
               ElevatedButton(
                 style: secondaryButton,
-                onPressed: () {
-                  BlocProvider.of<GameBloc>(context).add(ResetGame());
-                  GoRouter.of(context).goNamed('/');
-                },
+                onPressed: () => _goMainMenu(context),
                 child: const Text("Go to Menu"),
               ),
               const Spacer(),
               ElevatedButton(
                 style: secondaryButton,
-                onPressed: () =>
-                    BlocProvider.of<GameBloc>(context).add(ResetGame()),
+                onPressed: () => _goRetry(context),
                 child: const Text("Play Again"),
               ),
               const Spacer(
