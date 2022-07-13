@@ -33,6 +33,14 @@ class PlaySound extends SoundEvent {
   PlaySound(this.sound);
 }
 
+class PlaySong extends SoundEvent {
+  final ThemeSongs song;
+
+  PlaySong(this.song);
+}
+
+class StopSong extends SoundEvent {}
+
 class SelectHelperItem extends SoundEvent {}
 
 class StartTalkHelper extends SoundEvent {}

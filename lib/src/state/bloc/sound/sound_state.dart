@@ -18,6 +18,15 @@ enum SoundType {
   logoOpen,
 }
 
+enum ThemeSongs {
+  mainMenu,
+  playArea,
+  menus,
+  win,
+  lose,
+  credits,
+}
+
 List<String> placeSounds = [
   "sounds/pop1.ogg",
   "sounds/pop2.ogg",
@@ -54,6 +63,7 @@ abstract class SoundState {
   final int poliphony;
   final int activeAudioPlayer;
   final AudioPlayer helperAudioPlayer;
+  final AudioPlayer musicAudioPlayer;
   late List<AudioPlayer> audioPlayers;
 
   SoundState(
@@ -64,6 +74,7 @@ abstract class SoundState {
     this.audioPlayers,
     this.activeAudioPlayer,
     this.helperAudioPlayer,
+    this.musicAudioPlayer,
   );
 
   bool musicMute() => musicVolume == 0;
@@ -72,16 +83,86 @@ abstract class SoundState {
 
   bool helperMute() => helperVolume == 0;
 
+  // void _setPreferencesVolume(String key, double value) async {
+  //   final preferences = await sharedPreferences;
+  //   preferences.setDouble(key, value);
+  // }
+
+  // Future<double> _getPreferencesVolume(String key) async {
+  //   final preferences = await sharedPreferences;
+  //   return preferences.getDouble(key) ?? .5;
+  // }
+
+  // void recoverPreferenceValues() async {
+  //   final keys = ["music", "sound", "helper"];
+  //   for (var key in keys) {
+  //     final value = await _getPreferencesVolume(key);
+  //     _setPreferencesVolume(key, value);
+  //   }
+  // }
+
+  void setMusicVolume(double value) {
+    musicAudioPlayer.setVolume(value * .5);
+    // _setPreferencesVolume("music", value);
+  }
+
+  void setSoundVolume(double value) {
+    final audioPlayer = audioPlayers[activeAudioPlayer];
+    audioPlayer.setVolume(value);
+    // _setPreferencesVolume("sound", value);
+  }
+
+  void setHelperVolume(double value) {
+    helperAudioPlayer.setVolume(value * .5);
+    // _setPreferencesVolume("helper", value);
+  }
+
   void playSound(SoundType type) {
     final audioPlayer =
         audioPlayers[activeAudioPlayer.clamp(0, audioPlayers.length - 1)];
     audioPlayer.stop();
-    debugPrint(activeAudioPlayer.toString());
     final sound = _getRandomSoundType(type);
+    setSoundVolume(soundVolume);
     audioPlayer.play(
       sound,
       volume: soundVolume,
     );
+  }
+
+  void playSong(ThemeSongs song) {
+    musicAudioPlayer.setReleaseMode(ReleaseMode.loop);
+    final assetSong = _getAssetSong(song);
+    setMusicVolume(musicVolume);
+    musicAudioPlayer.play(
+      assetSong,
+      volume: musicVolume,
+    );
+  }
+
+  Source _getAssetSong(ThemeSongs song) {
+    String asset = "music/";
+    switch (song) {
+      case ThemeSongs.mainMenu:
+        asset += "spinning_out.ogg";
+        break;
+      case ThemeSongs.playArea:
+        asset += "warmth.ogg";
+        break;
+      case ThemeSongs.menus:
+        asset += "groovy_booty.ogg";
+        break;
+      case ThemeSongs.win:
+        asset += "you_re_in_the_future.ogg";
+        break;
+      case ThemeSongs.lose:
+        asset += "forever_lost.ogg";
+        break;
+      case ThemeSongs.credits:
+        asset += "beach_house.ogg";
+        break;
+      default:
+    }
+    return AssetSource(asset);
   }
 
   Source _getRandomSoundType(SoundType type) {
@@ -135,15 +216,20 @@ abstract class SoundState {
   void startTalkHelper() {
     final position = Duration(milliseconds: (Random().nextInt(10000)));
     helperAudioPlayer.stop();
+    setHelperVolume(helperVolume);
     helperAudioPlayer.play(
       AssetSource("sounds/helper/talking.ogg"),
       position: position,
-      volume: helperVolume * .5,
+      volume: helperVolume,
     );
   }
 
   void stopTalkHelper() {
     helperAudioPlayer.stop();
+  }
+
+  void stopSong() {
+    musicAudioPlayer.pause();
   }
 }
 
@@ -157,6 +243,7 @@ class SoundInitial extends SoundState {
           List.generate(2, (index) => AudioPlayer()),
           0,
           AudioPlayer(),
+          AudioPlayer(),
         );
 }
 
@@ -169,5 +256,6 @@ class SoundActive extends SoundState {
     super.audioPlayers,
     super.activeAudioPlayer,
     super.helperAudioPlayer,
+    super.musicAudioPlayer,
   );
 }

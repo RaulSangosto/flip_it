@@ -1,0 +1,26 @@
+
+Todo:
+
+  Design:
+    ☐ Adapt Layout to fit multiple screens sizes
+    ☐ Add Max Size to cards
+    ☐ Add Max Size to Logo
+    ☐ Add Drawer open maxSize
+    ☐ Add Credits Items Max Width
+
+  Logic:
+    ☐ Add Options to Shared Preferences
+  
+  UI:
+    ☐ Add Slow automatic scroll in *Credits page*
+    ✔ Remove Keney credit from *Main Menu* @done(22-07-13 17:28)
+    ✔ Add mute Music button to *Main Menu* @done(22-07-13 17:28)
+
+  Music:
+    ☐ Add CrossFade between songs
+    ☐ Allow Music to go through Pages
+    ☐ Decrease Music Volume
+    ☐ Improve Music Songs
+
+  Issues:
+    ☐ Crash sometimes when helper talks

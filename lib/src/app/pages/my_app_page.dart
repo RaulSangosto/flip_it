@@ -21,55 +21,73 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: '/',
         name: 'main menu',
-        builder: (context, state) => AnnotatedRegion<SystemUiOverlayStyle>(
-          value: const SystemUiOverlayStyle(
-            statusBarBrightness: Brightness.light,
-            statusBarIconBrightness: Brightness.dark,
-          ),
-          child: MainMenuPage(key: const Key('main menu')),
-        ),
+        builder: (context, state) {
+          BlocProvider.of<SoundBloc>(context).add(StopSong());
+          BlocProvider.of<SoundBloc>(context)
+              .add(PlaySong(ThemeSongs.mainMenu));
+          return AnnotatedRegion<SystemUiOverlayStyle>(
+            value: const SystemUiOverlayStyle(
+              statusBarBrightness: Brightness.light,
+              statusBarIconBrightness: Brightness.dark,
+            ),
+            child: MainMenuPage(key: const Key('main menu')),
+          );
+        },
       ),
       GoRoute(
         path: '/board/play',
         name: 'play',
-        pageBuilder: (context, state) => buildMyTransition(
-          child: const AnnotatedRegion<SystemUiOverlayStyle>(
-            value: SystemUiOverlayStyle(
-              statusBarBrightness: Brightness.light,
-              statusBarIconBrightness: Brightness.dark,
+        pageBuilder: (context, state) {
+          BlocProvider.of<SoundBloc>(context).add(StopSong());
+          BlocProvider.of<SoundBloc>(context)
+              .add(PlaySong(ThemeSongs.playArea));
+          return buildMyTransition(
+            child: const AnnotatedRegion<SystemUiOverlayStyle>(
+              value: SystemUiOverlayStyle(
+                statusBarBrightness: Brightness.light,
+                statusBarIconBrightness: Brightness.dark,
+              ),
+              child: PlayPage(key: Key('board/play')),
             ),
-            child: PlayPage(key: Key('board/play')),
-          ),
-          color: darkColor,
-        ),
+            color: darkColor,
+          );
+        },
       ),
       GoRoute(
           path: '/options',
           name: 'options',
-          pageBuilder: (context, state) => buildMyTransition(
-                child: const AnnotatedRegion<SystemUiOverlayStyle>(
-                  value: SystemUiOverlayStyle(
-                    statusBarBrightness: Brightness.dark,
-                    statusBarIconBrightness: Brightness.light,
-                  ),
-                  child: OptionsPage(key: Key('options')),
+          pageBuilder: (context, state) {
+            BlocProvider.of<SoundBloc>(context).add(StopSong());
+            return buildMyTransition(
+              child: const AnnotatedRegion<SystemUiOverlayStyle>(
+                value: SystemUiOverlayStyle(
+                  statusBarBrightness: Brightness.dark,
+                  statusBarIconBrightness: Brightness.light,
                 ),
-                color: darkColor,
+                child: OptionsPage(key: Key('options')),
               ),
+              color: darkColor,
+            );
+          },
           routes: [
             GoRoute(
               path: 'options/credits',
               name: 'credits',
-              pageBuilder: (context, state) => buildMyTransition(
-                child: const AnnotatedRegion<SystemUiOverlayStyle>(
-                  value: SystemUiOverlayStyle(
-                    statusBarBrightness: Brightness.dark,
-                    statusBarIconBrightness: Brightness.light,
+              pageBuilder: (context, state) {
+                BlocProvider.of<SoundBloc>(context).add(StopSong());
+                BlocProvider.of<SoundBloc>(context)
+                    .add(PlaySong(ThemeSongs.credits));
+                return buildMyTransition(
+                  child: const AnnotatedRegion<SystemUiOverlayStyle>(
+                    value: SystemUiOverlayStyle(
+                      statusBarBrightness: Brightness.dark,
+                      statusBarIconBrightness: Brightness.light,
+                    ),
+                    child: CreditsPage(key: Key('credits')),
                   ),
-                  child: CreditsPage(key: Key('credits')),
-                ),
-                color: white,
-              ),
+                  color: white,
+                );
+              },
             ),
           ]),
     ],

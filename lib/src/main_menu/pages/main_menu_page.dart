@@ -1,3 +1,6 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../state/bloc/sound/sound_bloc.dart';
 import '../../ui/logo.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +47,17 @@ class MainMenuPage extends StatelessWidget {
                 ),
                 const Spacer(),
                 const Text("Created by Raúl"),
-                const Text("Sound Effects by Kenney"),
+                BlocBuilder<SoundBloc, SoundState>(
+                  builder: (context, state) {
+                    return IconButton(
+                      onPressed: () => BlocProvider.of<SoundBloc>(context)
+                          .add(ToggleMusicVolume()),
+                      icon: Icon(state.musicMute()
+                          ? Icons.music_off_rounded
+                          : Icons.music_note_rounded),
+                    );
+                  },
+                ),
                 const SizedBox(
                   height: 50,
                 ),

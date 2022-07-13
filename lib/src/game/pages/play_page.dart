@@ -35,9 +35,12 @@ class PlayPage extends StatelessWidget {
               BlocProvider.of<GameBloc>(context).add(DrawCards());
             } else if (finised && win) {
               BlocProvider.of<SoundBloc>(context).add(PlaySound(SoundType.win));
+              BlocProvider.of<SoundBloc>(context).add(PlaySong(ThemeSongs.win));
             } else if (finised && !win) {
               BlocProvider.of<SoundBloc>(context)
                   .add(PlaySound(SoundType.lose));
+              BlocProvider.of<SoundBloc>(context)
+                  .add(PlaySong(ThemeSongs.lose));
             }
             return Scaffold(
               onEndDrawerChanged: (isOpened) {
