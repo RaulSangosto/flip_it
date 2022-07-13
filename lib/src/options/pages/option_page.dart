@@ -70,7 +70,7 @@ class VolumeControls extends StatelessWidget {
               onChanged: (double value) {
                 BlocProvider.of<SoundBloc>(context).add(SetMusicVolume(value));
               },
-              value: state.musicVolume,
+              value: state.controller.musicVolume,
               icon: IconButton(
                 onPressed: () {
                   BlocProvider.of<SoundBloc>(context).add(ToggleMusicVolume());
@@ -78,7 +78,7 @@ class VolumeControls extends StatelessWidget {
                 icon: Icon(
                     size: 35,
                     color: white,
-                    state.musicMute()
+                    state.controller.musicMute()
                         ? Icons.music_off_rounded
                         : Icons.music_note_rounded),
               ),
@@ -89,7 +89,7 @@ class VolumeControls extends StatelessWidget {
               onChanged: (double value) {
                 BlocProvider.of<SoundBloc>(context).add(SetSoundVolume(value));
               },
-              value: state.soundVolume,
+              value: state.controller.soundVolume,
               icon: IconButton(
                 onPressed: () {
                   BlocProvider.of<SoundBloc>(context).add(ToggleSoundVolume());
@@ -97,7 +97,7 @@ class VolumeControls extends StatelessWidget {
                 icon: Icon(
                     size: 35,
                     color: white,
-                    state.soundMute()
+                    state.controller.soundMute()
                         ? Icons.volume_off_rounded
                         : Icons.volume_up_rounded),
               ),
@@ -108,7 +108,7 @@ class VolumeControls extends StatelessWidget {
               onChanged: (double value) {
                 BlocProvider.of<SoundBloc>(context).add(SetHelperVolume(value));
               },
-              value: state.helperVolume,
+              value: state.controller.helperVolume,
               icon: IconButton(
                 onPressed: () {
                   BlocProvider.of<SoundBloc>(context).add(ToggleHelperVolume());
@@ -116,7 +116,7 @@ class VolumeControls extends StatelessWidget {
                 icon: Icon(
                     size: 35,
                     color: white,
-                    state.helperMute()
+                    state.controller.helperMute()
                         ? Icons.voice_over_off_rounded
                         : Icons.record_voice_over_rounded),
               ),

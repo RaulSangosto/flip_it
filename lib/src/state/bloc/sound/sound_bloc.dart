@@ -1,7 +1,5 @@
-import 'dart:math';
-
 import 'package:audioplayers/audioplayers.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flipit/src/state/bloc/sound/sound_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
@@ -25,191 +23,114 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> {
   }
 
   SoundActive _toggleMusicVolume(ToggleMusicVolume event) {
-    final double volume = state.musicVolume == 0.0 ? 0.5 : 0.0;
-    state.setMusicVolume(volume);
+    final double volume = state.controller.musicVolume == 0.0 ? 0.5 : 0.0;
+    state.controller.setMusicVolume(volume);
 
-    return SoundActive(
-      volume,
-      state.soundVolume,
-      state.helperVolume,
-      state.poliphony,
-      state.audioPlayers,
-      state.activeAudioPlayer,
-      state.helperAudioPlayer,
-      state.musicAudioPlayer,
-    );
+    return SoundActive(state.controller.copyWith(musicVolume: volume));
   }
 
   SoundActive _toggleSoundVolume(ToggleSoundVolume event) {
-    final double volume = state.soundVolume == 0.0 ? 0.5 : 0.0;
-    state.setSoundVolume(volume);
+    final double volume = state.controller.soundVolume == 0.0 ? 0.5 : 0.0;
+    state.controller.setSoundVolume(volume);
 
-    return SoundActive(
-      state.musicVolume,
-      volume,
-      state.helperVolume,
-      state.poliphony,
-      state.audioPlayers,
-      state.activeAudioPlayer,
-      state.helperAudioPlayer,
-      state.musicAudioPlayer,
-    );
+    return SoundActive(state.controller.copyWith(soundVolume: volume));
   }
 
   SoundActive _toggleHelperVolume(ToggleHelperVolume event) {
-    final double volume = state.helperVolume == 0.0 ? 0.5 : 0.0;
-    state.setHelperVolume(volume);
+    final double volume = state.controller.helperVolume == 0.0 ? 0.5 : 0.0;
+    state.controller.setHelperVolume(volume);
 
-    return SoundActive(
-      state.musicVolume,
-      state.soundVolume,
-      volume,
-      state.poliphony,
-      state.audioPlayers,
-      state.activeAudioPlayer,
-      state.helperAudioPlayer,
-      state.musicAudioPlayer,
-    );
+    return SoundActive(state.controller.copyWith(helperVolume: volume));
   }
 
   SoundActive _setMusicVolume(SetMusicVolume event) {
-    state.setMusicVolume(event.value);
+    state.controller.setMusicVolume(event.value);
 
-    return SoundActive(
-      event.value.clamp(0.0, 1.0),
-      state.soundVolume,
-      state.helperVolume,
-      state.poliphony,
-      state.audioPlayers,
-      state.activeAudioPlayer,
-      state.helperAudioPlayer,
-      state.musicAudioPlayer,
-    );
+    return SoundActive(state.controller.copyWith(
+      musicVolume: event.value.clamp(0.0, 1.0),
+    ));
   }
 
   SoundActive _setSoundVolume(SetSoundVolume event) {
-    state.setSoundVolume(event.value);
+    state.controller.setSoundVolume(event.value);
 
-    return SoundActive(
-      state.musicVolume,
-      event.value.clamp(0.0, 1.0),
-      state.helperVolume,
-      state.poliphony,
-      state.audioPlayers,
-      state.activeAudioPlayer,
-      state.helperAudioPlayer,
-      state.musicAudioPlayer,
-    );
+    return SoundActive(state.controller.copyWith(
+      soundVolume: event.value.clamp(0.0, 1.0),
+    ));
   }
 
   SoundActive _setHelperVolume(SetHelperVolume event) {
-    state.setHelperVolume(event.value);
+    state.controller.setHelperVolume(event.value);
 
-    return SoundActive(
-      state.musicVolume,
-      state.soundVolume,
-      event.value.clamp(0.0, 1.0),
-      state.poliphony,
-      state.audioPlayers,
-      state.activeAudioPlayer,
-      state.helperAudioPlayer,
-      state.musicAudioPlayer,
-    );
+    return SoundActive(state.controller.copyWith(
+      helperVolume: event.value.clamp(0.0, 1.0),
+    ));
   }
 
   SoundState _playSound(PlaySound event) {
-    state.playSound(event.sound);
-    var activeAudioPlayer = state.activeAudioPlayer + 1;
-    if (activeAudioPlayer >= state.audioPlayers.length) activeAudioPlayer = 0;
+    state.controller.playSound(event.sound);
+    var activeAudioPlayer = state.controller.activeAudioPlayer + 1;
+    if (activeAudioPlayer >= state.controller.audioPlayers.length) {
+      activeAudioPlayer = 0;
+    }
 
     return SoundActive(
-      state.musicVolume,
-      state.soundVolume,
-      state.helperVolume,
-      state.poliphony,
-      state.audioPlayers,
-      activeAudioPlayer,
-      state.helperAudioPlayer,
-      state.musicAudioPlayer,
-    );
+        state.controller.copyWith(activeAudioPlayer: activeAudioPlayer));
   }
 
   SoundState _playSong(PlaySong event) {
-    state.stopSong();
-    state.playSong(event.song);
+    state.controller.stopSong();
+    state.controller.playSong(event.song);
 
-    return SoundActive(
-      state.musicVolume,
-      state.soundVolume,
-      state.helperVolume,
-      state.poliphony,
-      state.audioPlayers,
-      state.activeAudioPlayer,
-      state.helperAudioPlayer,
-      state.musicAudioPlayer,
-    );
+    return SoundActive(state.controller.copyWith());
   }
 
   SoundState _stopSong(StopSong event) {
-    state.stopSong();
+    state.controller.stopSong();
 
-    return SoundActive(
-      state.musicVolume,
-      state.soundVolume,
-      state.helperVolume,
-      state.poliphony,
-      state.audioPlayers,
-      state.activeAudioPlayer,
-      state.helperAudioPlayer,
-      state.musicAudioPlayer,
-    );
+    return SoundActive(state.controller.copyWith());
   }
 
   SoundState _startTalkHelper() {
-    state.startTalkHelper();
+    state.controller.startTalkHelper();
 
-    return SoundActive(
-      state.musicVolume,
-      state.soundVolume,
-      state.helperVolume,
-      state.poliphony,
-      state.audioPlayers,
-      state.activeAudioPlayer,
-      state.helperAudioPlayer,
-      state.musicAudioPlayer,
-    );
+    return SoundActive(state.controller.copyWith());
   }
 
   SoundState _stopTalkHelper() {
-    state.stopTalkHelper();
+    state.controller.stopTalkHelper();
 
-    return SoundActive(
-      state.musicVolume,
-      state.soundVolume,
-      state.helperVolume,
-      state.poliphony,
-      state.audioPlayers,
-      state.activeAudioPlayer,
-      state.helperAudioPlayer,
-      state.musicAudioPlayer,
-    );
+    return SoundActive(state.controller.copyWith());
   }
 
   SoundState _selectHelperItem() {
-    state.startTalkHelper();
-    state.playSound(SoundType.select);
-    var activeAudioPlayer = state.activeAudioPlayer + 1;
-    if (activeAudioPlayer >= state.audioPlayers.length) activeAudioPlayer = 0;
+    state.controller.startTalkHelper();
+    state.controller.playSound(SoundType.select);
+    var activeAudioPlayer = state.controller.activeAudioPlayer + 1;
+    if (activeAudioPlayer >= state.controller.audioPlayers.length) {
+      activeAudioPlayer = 0;
+    }
 
-    return SoundActive(
-      state.musicVolume,
-      state.soundVolume,
-      state.helperVolume,
-      state.poliphony,
-      state.audioPlayers,
-      activeAudioPlayer,
-      state.helperAudioPlayer,
-      state.musicAudioPlayer,
-    );
+    return SoundActive(state.controller.copyWith(
+      activeAudioPlayer: activeAudioPlayer,
+    ));
+  }
+
+  @override
+  SoundState? fromJson(Map<String, dynamic> json) {
+    try {
+      final controller = SoundController.fromJson(json);
+      return SoundActive(controller);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  @override
+  Map<String, dynamic>? toJson(SoundState state) {
+    if (state is SoundActive) {
+      return state.controller.toJson();
+    }
+    return null;
   }
 }

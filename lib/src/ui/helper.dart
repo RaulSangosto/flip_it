@@ -95,7 +95,7 @@ class _HelperState extends State<Helper> {
     return BlocBuilder<SoundBloc, SoundState>(
       builder: (context, state) {
         double width = MediaQuery.of(context).size.width / 5.5;
-        bool isTalking = state.helperAudioPlayer.state == PlayerState.playing;
+        bool isTalking = state.controller.helperAudioPlayer.state == PlayerState.playing;
         WidgetsBinding.instance.addPostFrameCallback((_) {
           // Add Your Code here.
           if (isTalking && !startedTalking) {

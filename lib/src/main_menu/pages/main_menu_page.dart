@@ -52,7 +52,7 @@ class MainMenuPage extends StatelessWidget {
                     return IconButton(
                       onPressed: () => BlocProvider.of<SoundBloc>(context)
                           .add(ToggleMusicVolume()),
-                      icon: Icon(state.musicMute()
+                      icon: Icon(state.controller.musicMute()
                           ? Icons.music_off_rounded
                           : Icons.music_note_rounded),
                     );

@@ -1,5 +1,6 @@
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import '../state/bloc/sound/sound_bloc.dart';
+import '../state/bloc/sound/sound_model.dart';
 import '../theme/main_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

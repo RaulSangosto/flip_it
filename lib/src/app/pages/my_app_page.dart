@@ -10,6 +10,7 @@ import '../../options/pages/option_page.dart';
 import '../../state/bloc/game/game_bloc.dart';
 import '../../state/bloc/help_menu/helpmenu_bloc.dart';
 import '../../state/bloc/sound/sound_bloc.dart';
+import '../../state/bloc/sound/sound_model.dart';
 import '../../theme/main_theme.dart';
 import '../../ui/my_transition.dart';
 

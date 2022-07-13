@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../state/bloc/game/game_bloc.dart';
+import '../../state/bloc/sound/sound_model.dart';
 import '../../theme/main_theme.dart';
 import 'confetti.dart';
 
