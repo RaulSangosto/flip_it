@@ -51,6 +51,19 @@ class SoundController {
     this.audioPlayers,
   );
 
+  factory SoundController.initial() {
+    return SoundController(
+      .5,
+      .5,
+      .5,
+      2,
+      0,
+      AudioPlayer(),
+      AudioPlayer(),
+      List.generate(2, (index) => AudioPlayer()),
+    );
+  }
+
   SoundController copyWith({
     double? musicVolume,
     double? soundVolume,

@@ -5,5 +5,5 @@ bool gameFinished(GameState state) {
 }
 
 bool gameWon(GameState state) {
-  return state is GameFinished && state.win();
+  return state is GameFinished && state.controller.win();
 }

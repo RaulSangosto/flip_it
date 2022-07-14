@@ -8,17 +8,7 @@ abstract class SoundState {
 }
 
 class SoundInitial extends SoundState {
-  SoundInitial()
-      : super(SoundController(
-          .5,
-          .5,
-          .5,
-          2,
-          0,
-          AudioPlayer(),
-          AudioPlayer(),
-          List.generate(2, (index) => AudioPlayer()),
-        ));
+  SoundInitial() : super(SoundController.initial());
 }
 
 class SoundActive extends SoundState {

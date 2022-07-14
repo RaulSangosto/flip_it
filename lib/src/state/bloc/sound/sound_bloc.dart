@@ -6,7 +6,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 part 'sound_event.dart';
 part 'sound_state.dart';
 
-class SoundBloc extends Bloc<SoundEvent, SoundState> {
+class SoundBloc extends Bloc<SoundEvent, SoundState> with HydratedMixin {
   SoundBloc() : super(SoundInitial()) {
     on<ToggleMusicVolume>((event, emit) => emit(_toggleMusicVolume(event)));
     on<ToggleSoundVolume>((event, emit) => emit(_toggleSoundVolume(event)));

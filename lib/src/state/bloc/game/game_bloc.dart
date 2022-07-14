@@ -1,8 +1,8 @@
-import 'package:bloc/bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:meta/meta.dart';
 
 import 'model/card_collection.dart';
+import 'model/game_model.dart';
 
 part 'game_event.dart';
 part 'game_state.dart';
@@ -20,9 +20,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   }
 
   GameState _placeCardInCollection(PlaceCardInCollection event) {
-    var collections = state.collections;
+    var collections = state.controller.collections;
     var collection = collections[event.collectionIndex];
-    var hand = state.hand;
+    var hand = state.controller.hand;
     if (event.card == interchangeCard) {
       var last = collection.takeCard();
       var index = hand.indexOf(event.card);
@@ -35,23 +35,39 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
     final status = _getGameStatus();
     if (status == GameStatus.playing) {
-      return GamePlaying(state.cards, collections, hand, status);
+      return GamePlaying(state.controller.copyWith(
+        status: status,
+        collections: collections,
+        hand: hand,
+      ));
     } else {
-      return GameFinished(state.cards, collections, hand, status);
+      return GameFinished(state.controller.copyWith(
+        status: status,
+        collections: collections,
+        hand: hand,
+      ));
     }
   }
 
   GameState _drawCards(DrawCards event) {
-    var cards = state.cards;
-    var hand = state.hand;
+    var cards = state.controller.cards;
+    var hand = state.controller.hand;
     var drawCards = cards.take(handSize - hand.length).toList();
     cards.removeRange(0, drawCards.length);
     hand.addAll(drawCards);
     final status = _getGameStatus();
     if (status == GameStatus.playing) {
-      return GamePlaying(cards, state.collections, hand, status);
+      return GamePlaying(state.controller.copyWith(
+        status: status,
+        cards: cards,
+        hand: hand,
+      ));
     } else {
-      return GameFinished(cards, state.collections, hand, status);
+      return GameFinished(state.controller.copyWith(
+        status: status,
+        cards: cards,
+        hand: hand,
+      ));
     }
   }
 
@@ -60,18 +76,19 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   }
 
   GameStatus _getGameStatus() {
-    final deck = state.cards;
-    final hand = state.hand;
+    final deck = state.controller.cards;
+    final hand = state.controller.hand;
     final handNumberCards = hand.where((card) => card > 0).toList();
     if (deck.isEmpty) {
       if (hand.isEmpty || handNumberCards.isEmpty) {
         return GameStatus.win;
-      } else if (_canPlaceCards(hand, state.collections)) {
+      } else if (_canPlaceCards(hand, state.controller.collections)) {
         return GameStatus.playing;
       } else {
         return GameStatus.lose;
       }
-    } else if (_canPlaceCards(hand, state.collections) || hand.length < 8) {
+    } else if (_canPlaceCards(hand, state.controller.collections) ||
+        hand.length < 8) {
       return GameStatus.playing;
     } else {
       return GameStatus.lose;
@@ -87,5 +104,23 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       }
     }
     return false;
+  }
+
+  @override
+  GameState? fromJson(Map<String, dynamic> json) {
+    try {
+      final controller = GameController.fromJson(json);
+      return GamePlaying(controller);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  @override
+  Map<String, dynamic>? toJson(GameState state) {
+    if (state is GamePlaying) {
+      return state.controller.toJson();
+    }
+    return null;
   }
 }

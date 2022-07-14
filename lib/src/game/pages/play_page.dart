@@ -31,8 +31,8 @@ class PlayPage extends StatelessWidget {
             finised = gameFinished(gameState);
             win = gameWon(gameState);
             if (!finised &&
-                gameState.cards.isNotEmpty &&
-                gameState.hand.length < 8) {
+                gameState.controller.cards.isNotEmpty &&
+                gameState.controller.hand.length < 8) {
               BlocProvider.of<GameBloc>(context).add(DrawCards());
             } else if (finised && win) {
               BlocProvider.of<SoundBloc>(context).add(PlaySound(SoundType.win));
@@ -72,17 +72,19 @@ class PlayPage extends StatelessWidget {
                             children: [
                               Expanded(
                                 flex: 3,
-                                child: TopBar(deck: gameState.cards),
+                                child: TopBar(deck: gameState.controller.cards),
                               ),
                               Expanded(
                                 flex: 4,
                                 child: PlayCardZone(
-                                    collections: gameState.collections),
+                                    collections:
+                                        gameState.controller.collections),
                               ),
                               Expanded(
                                 flex: 6,
                                 child: HandCards(
-                                  cards: gameState.hand,
+                                  key: ValueKey(gameState.controller.cards),
+                                  cards: gameState.controller.hand,
                                 ),
                               ),
                             ],
