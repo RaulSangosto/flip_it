@@ -9,7 +9,9 @@ Todo:
     ☐ Add Credits Items Max Width
 
   Logic:
-    ☐ Add Options to Shared Preferences
+    ✘ Add Options to Shared Preferences @cancelled(22-07-14 12:55)
+    ✔ Add Hydrated to Bloc Sound @done(22-07-14 12:56)
+    ☐ Add Hydrated to Bloc Game
   
   UI:
     ☐ Add Slow automatic scroll in *Credits page*
