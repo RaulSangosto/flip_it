@@ -92,24 +92,6 @@ class SoundController {
 
   bool helperMute() => helperVolume == 0;
 
-  // void _setPreferencesVolume(String key, double value) async {
-  //   final preferences = await sharedPreferences;
-  //   preferences.setDouble(key, value);
-  // }
-
-  // Future<double> _getPreferencesVolume(String key) async {
-  //   final preferences = await sharedPreferences;
-  //   return preferences.getDouble(key) ?? .5;
-  // }
-
-  // void recoverPreferenceValues() async {
-  //   final keys = ["music", "sound", "helper"];
-  //   for (var key in keys) {
-  //     final value = await _getPreferencesVolume(key);
-  //     _setPreferencesVolume(key, value);
-  //   }
-  // }
-
   void setMusicVolume(double value) {
     musicAudioPlayer.setVolume(value * .5);
     // _setPreferencesVolume("music", value);
@@ -118,12 +100,10 @@ class SoundController {
   void setSoundVolume(double value) {
     final audioPlayer = audioPlayers[activeAudioPlayer];
     audioPlayer.setVolume(value);
-    // _setPreferencesVolume("sound", value);
   }
 
   void setHelperVolume(double value) {
     helperAudioPlayer.setVolume(value * .5);
-    // _setPreferencesVolume("helper", value);
   }
 
   void playSound(SoundType type) {

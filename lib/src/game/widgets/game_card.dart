@@ -178,13 +178,16 @@ class GameCard extends StatelessWidget {
               ? BorderSide(color: borderColor!, width: 3)
               : BorderSide.none),
       elevation: selected ? 5 : 0,
-      child: AnimatedContainer(
-        width: (MediaQuery.of(context).size.width - 100) / 4,
-        padding: const EdgeInsets.all(8.0),
-        duration: const Duration(milliseconds: 200),
-        child: AspectRatio(
-          aspectRatio: 7 / 12,
-          child: content,
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 150),
+        child: AnimatedContainer(
+          width: (MediaQuery.of(context).size.width - 100) / 4,
+          padding: const EdgeInsets.all(8.0),
+          duration: const Duration(milliseconds: 200),
+          child: AspectRatio(
+            aspectRatio: 7 / 12,
+            child: content,
+          ),
         ),
       ),
     );

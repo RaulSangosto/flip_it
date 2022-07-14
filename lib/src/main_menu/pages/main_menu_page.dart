@@ -15,6 +15,23 @@ class MainMenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (_, constraints) {
+      if (constraints.maxWidth >= constraints.maxHeight) {
+        return MainMenuPhonePage(key: const Key('main menu'));
+      } else {
+        return MainMenuPhonePage(key: const Key('main menu'));
+      }
+    });
+  }
+}
+
+class MainMenuPhonePage extends StatelessWidget {
+  MainMenuPhonePage({Key? key}) : super(key: key);
+
+  final controller = FlipCardController();
+
+  @override
+  Widget build(BuildContext context) {
     return CustomPaint(
       painter: BackgrounCirclesPainter(),
       child: Scaffold(
@@ -33,12 +50,13 @@ class MainMenuPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const LogoAnimated(
-                  key: ValueKey("logo"),
+                const Expanded(
+                  flex: 3,
+                  child: LogoAnimated(
+                    key: ValueKey("logo"),
+                  ),
                 ),
-                const Spacer(
-                  flex: 2,
-                ),
+                const Spacer(),
                 ElevatedButton(
                   onPressed: () {
                     GoRouter.of(context).pushNamed('play');
@@ -60,6 +78,75 @@ class MainMenuPage extends StatelessWidget {
                 ),
                 const SizedBox(
                   height: 50,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class MainMenuDesktopPage extends StatelessWidget {
+  MainMenuDesktopPage({Key? key}) : super(key: key);
+
+  final controller = FlipCardController();
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      painter: BackgrounCirclesPainter(),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(actions: [
+          IconButton(
+              onPressed: () {
+                GoRouter.of(context).pushNamed('options');
+              },
+              icon: const Icon(Icons.settings))
+        ]),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Center(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const LogoAnimated(
+                  key: ValueKey("logo"),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        GoRouter.of(context).pushNamed('play');
+                      },
+                      child: const Text("Play"),
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    const Text("Created by Raúl"),
+                    BlocBuilder<SoundBloc, SoundState>(
+                      builder: (context, state) {
+                        return IconButton(
+                          onPressed: () => BlocProvider.of<SoundBloc>(context)
+                              .add(ToggleMusicVolume()),
+                          icon: Icon(state.controller.musicMute()
+                              ? Icons.music_off_rounded
+                              : Icons.music_note_rounded),
+                        );
+                      },
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                  ],
                 ),
               ],
             ),

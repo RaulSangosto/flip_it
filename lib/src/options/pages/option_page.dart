@@ -15,36 +15,41 @@ class OptionsPage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(
-                flex: 2,
-              ),
-              Row(
+          child: Center(
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 800),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Settings",
-                    style: deckTextStyle,
+                  const Spacer(
+                    flex: 2,
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Settings",
+                        style: deckTextStyle,
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  const VolumeControls(),
+                  const Spacer(
+                    flex: 2,
+                  ),
+                  ElevatedButton(
+                    style: secondaryButton,
+                    onPressed: () {
+                      GoRouter.of(context).pop();
+                    },
+                    child: const Text("Back"),
+                  ),
+                  const Spacer(),
                 ],
               ),
-              const Spacer(),
-              const VolumeControls(),
-              const Spacer(
-                flex: 2,
-              ),
-              ElevatedButton(
-                style: secondaryButton,
-                onPressed: () {
-                  GoRouter.of(context).pop();
-                },
-                child: const Text("Back"),
-              ),
-              const Spacer(),
-            ],
+            ),
           ),
         ),
       ),

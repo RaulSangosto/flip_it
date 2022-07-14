@@ -23,9 +23,6 @@ class MyApp extends StatelessWidget {
         path: '/',
         name: 'main menu',
         builder: (context, state) {
-          BlocProvider.of<SoundBloc>(context).add(StopSong());
-          BlocProvider.of<SoundBloc>(context)
-              .add(PlaySong(ThemeSongs.mainMenu));
           return AnnotatedRegion<SystemUiOverlayStyle>(
             value: const SystemUiOverlayStyle(
               statusBarBrightness: Brightness.light,
@@ -40,6 +37,7 @@ class MyApp extends StatelessWidget {
         name: 'play',
         pageBuilder: (context, state) {
           BlocProvider.of<SoundBloc>(context).add(StopSong());
+
           BlocProvider.of<SoundBloc>(context)
               .add(PlaySong(ThemeSongs.playArea));
           return buildMyTransition(
@@ -58,7 +56,7 @@ class MyApp extends StatelessWidget {
           path: '/options',
           name: 'options',
           pageBuilder: (context, state) {
-            BlocProvider.of<SoundBloc>(context).add(StopSong());
+            // BlocProvider.of<SoundBloc>(context).add(StopSong());
             return buildMyTransition(
               child: const AnnotatedRegion<SystemUiOverlayStyle>(
                 value: SystemUiOverlayStyle(

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flipit/src/state/bloc/sound/sound_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -150,70 +152,73 @@ class DrawerMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      width: MediaQuery.of(context).size.width - 60,
+      width: min(MediaQuery.of(context).size.width - 60, 800),
       backgroundColor: darkColor,
-      child: ListView(
-        padding: const EdgeInsets.all(15.0),
-        children: [
-          DrawerHeader(
-            child: Center(
-              child: Text(
-                "Options",
-                style: deckTextStyle,
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 600),
+        child: ListView(
+          padding: const EdgeInsets.all(15.0),
+          children: [
+            DrawerHeader(
+              child: Center(
+                child: Text(
+                  "Options",
+                  style: deckTextStyle,
+                ),
               ),
             ),
-          ),
-          ListTile(
-            title: ElevatedButton(
-              onPressed: () {
-                Scaffold.of(context).closeEndDrawer();
-                GoRouter.of(context).pushNamed('options');
-              },
-              style: secondaryButton,
-              child: const Text("Settings"),
+            ListTile(
+              title: ElevatedButton(
+                onPressed: () {
+                  Scaffold.of(context).closeEndDrawer();
+                  GoRouter.of(context).pushNamed('options');
+                },
+                style: secondaryButton,
+                child: const Text("Settings"),
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          ListTile(
-            title: ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (_) => const RestartGameDialog(),
-                ).then((value) => Scaffold.of(context).closeEndDrawer());
-              },
-              style: secondaryButton,
-              child: const Text("Restart"),
+            const SizedBox(
+              height: 20,
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          ListTile(
-            title: ElevatedButton(
-              onPressed: () {
-                Scaffold.of(context).closeEndDrawer();
-                GoRouter.of(context).goNamed('main menu');
-              },
-              style: secondaryButton,
-              child: const Text("Exit"),
+            ListTile(
+              title: ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) => const RestartGameDialog(),
+                  ).then((value) => Scaffold.of(context).closeEndDrawer());
+                },
+                style: secondaryButton,
+                child: const Text("Restart"),
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          ListTile(
-            title: ElevatedButton(
-              onPressed: () {
-                Scaffold.of(context).closeEndDrawer();
-              },
-              style: secondaryButton,
-              child: const Text("Resume"),
+            const SizedBox(
+              height: 20,
             ),
-          ),
-        ],
+            ListTile(
+              title: ElevatedButton(
+                onPressed: () {
+                  Scaffold.of(context).closeEndDrawer();
+                  GoRouter.of(context).goNamed('main menu');
+                },
+                style: secondaryButton,
+                child: const Text("Exit"),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ListTile(
+              title: ElevatedButton(
+                onPressed: () {
+                  Scaffold.of(context).closeEndDrawer();
+                },
+                style: secondaryButton,
+                child: const Text("Resume"),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

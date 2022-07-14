@@ -148,9 +148,10 @@ class _HandCardState extends State<HandCard> {
                   transform: Matrix4.identity()..rotateZ(angle),
                   child: front,
                 ),
-                childWhenDragging: const SizedBox(
-                  width: 81,
-                  height: 100,
+                childWhenDragging: const GameCard(
+                  content: SizedBox.shrink(),
+                  color: Colors.transparent,
+                  selected: false,
                 ),
                 onDragEnd: _refresh,
                 child: getDraggableChild(back, front),

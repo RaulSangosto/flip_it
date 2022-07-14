@@ -71,14 +71,26 @@ class PlayPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Expanded(
-                                flex: 3,
+                                flex: 4,
                                 child: TopBar(deck: gameState.controller.cards),
                               ),
                               Expanded(
                                 flex: 4,
-                                child: PlayCardZone(
-                                    collections:
-                                        gameState.controller.collections),
+                                child: Container(
+                                  constraints:
+                                      const BoxConstraints(maxWidth: 1000),
+                                  child: PlayCardZone(
+                                      collections:
+                                          gameState.controller.collections),
+                                ),
+                              ),
+                              AnimatedContainer(
+                                duration: const Duration(
+                                  milliseconds: 50,
+                                ),
+                                height: helpMenuState.open
+                                    ? MediaQuery.of(context).size.height / 30
+                                    : MediaQuery.of(context).size.height / 10,
                               ),
                               Expanded(
                                 flex: 6,
@@ -87,6 +99,15 @@ class PlayPage extends StatelessWidget {
                                   cards: gameState.controller.hand,
                                 ),
                               ),
+                              AnimatedContainer(
+                                duration: const Duration(
+                                  milliseconds: 50,
+                                ),
+                                height: !helpMenuState.open
+                                    ? MediaQuery.of(context).size.height / 30
+                                    : MediaQuery.of(context).size.height / 10,
+                              ),
+                              const Spacer(),
                             ],
                           ),
                         ),

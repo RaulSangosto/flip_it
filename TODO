@@ -2,11 +2,11 @@
 Todo:
 
   Design:
-    ☐ Adapt Layout to fit multiple screens sizes
-    ☐ Add Max Size to cards
-    ☐ Add Max Size to Logo
-    ☐ Add Drawer open maxSize
-    ☐ Add Credits Items Max Width
+    ✔ Adapt Layout to fit multiple screens sizes @done(22-07-14 21:56)
+    ☐ Improve Max Size to cards
+    ✔ Add Max Size to Logo @done(22-07-14 21:56)
+    ✔ Add Drawer open maxSize @done(22-07-14 21:56)
+    ✔ Add Credits Items Max Width @done(22-07-14 21:56)
 
   Logic:
     ✘ Add Options to Shared Preferences @cancelled(22-07-14 12:55)

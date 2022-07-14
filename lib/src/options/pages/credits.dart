@@ -13,91 +13,96 @@ class CreditsPage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 30.0),
-          child: Column(
-            children: [
-              Text(
-                "Credits",
-                style: cardTextStyle.copyWith(fontSize: 30),
-              ),
-              const SizedBox(height: 20),
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 30.0, vertical: 10.0),
-                  children: const [
-                    ListSpacer(
-                      dense: true,
-                    ),
-                    CreditItem(
-                      category: "Code",
-                      icon: Icons.code_rounded,
-                      name: "Raúl Sánchez",
-                    ),
-                    CreditItem(
-                      category: "Design",
-                      icon: Icons.design_services_rounded,
-                      name: "Raúl Sánchez",
-                    ),
-                    CreditItem(
-                      category: "Sound Effects",
-                      icon: Icons.volume_up_rounded,
-                      name: "Assets by Keney and wubitog",
-                    ),
-                    CreditItem(
-                      category: "Music",
-                      icon: Icons.library_music_rounded,
-                      name: "Joshuuu",
-                    ),
-                    CreditSection(
-                      header: "TrackList:",
-                      items: [
-                        CreditItem(
-                          category: "Main Menu Song",
-                          icon: Icons.album_rounded,
-                          name: "Light Music by joshuuu",
+          child: Center(
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 800),
+              child: Column(
+                children: [
+                  Text(
+                    "Credits",
+                    style: cardTextStyle.copyWith(fontSize: 30),
+                  ),
+                  const SizedBox(height: 20),
+                  Expanded(
+                    child: ListView(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30.0, vertical: 10.0),
+                      children: const [
+                        ListSpacer(
+                          dense: true,
                         ),
                         CreditItem(
-                          category: "Play Song",
-                          icon: Icons.album_rounded,
-                          name: "Warmth by joshuuu",
+                          category: "Code",
+                          icon: Icons.code_rounded,
+                          name: "Raúl Sánchez",
                         ),
                         CreditItem(
-                          category: "Win Song",
-                          icon: Icons.album_rounded,
-                          name: "You re in the Future by joshuuu",
+                          category: "Design",
+                          icon: Icons.design_services_rounded,
+                          name: "Raúl Sánchez",
                         ),
                         CreditItem(
-                          category: "Lose Song",
-                          icon: Icons.album_rounded,
-                          name: "Forever Lost by joshuuu",
+                          category: "Sound Effects",
+                          icon: Icons.volume_up_rounded,
+                          name: "Assets by Keney and wubitog",
                         ),
                         CreditItem(
-                          category: "Menus Song",
-                          icon: Icons.album_rounded,
-                          name: "Groovy Booty by joshuuu",
+                          category: "Music",
+                          icon: Icons.library_music_rounded,
+                          name: "Joshuuu",
+                        ),
+                        CreditSection(
+                          header: "TrackList:",
+                          items: [
+                            CreditItem(
+                              category: "Main Menu Song",
+                              icon: Icons.album_rounded,
+                              name: "Light Music by joshuuu",
+                            ),
+                            CreditItem(
+                              category: "Play Song",
+                              icon: Icons.album_rounded,
+                              name: "Warmth by joshuuu",
+                            ),
+                            CreditItem(
+                              category: "Win Song",
+                              icon: Icons.album_rounded,
+                              name: "You re in the Future by joshuuu",
+                            ),
+                            CreditItem(
+                              category: "Lose Song",
+                              icon: Icons.album_rounded,
+                              name: "Forever Lost by joshuuu",
+                            ),
+                            CreditItem(
+                              category: "Menus Song",
+                              icon: Icons.album_rounded,
+                              name: "Groovy Booty by joshuuu",
+                            ),
+                            CreditItem(
+                              category: "Credits Song",
+                              icon: Icons.album_rounded,
+                              name: "Beach House by joshuuu",
+                            ),
+                          ],
                         ),
                         CreditItem(
-                          category: "Credits Song",
-                          icon: Icons.album_rounded,
-                          name: "Beach House by joshuuu",
+                          category: "Made with",
+                          icon: Icons.flutter_dash_rounded,
+                          name: "Flutter",
                         ),
+                        ListSpacer(),
                       ],
                     ),
-                    CreditItem(
-                      category: "Made with",
-                      icon: Icons.flutter_dash_rounded,
-                      name: "Flutter",
-                    ),
-                    ListSpacer(),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () => GoRouter.of(context).pop(),
+                    child: const Text("Return"),
+                  )
+                ],
               ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () => GoRouter.of(context).pop(),
-                child: const Text("Return"),
-              )
-            ],
+            ),
           ),
         ),
       ),

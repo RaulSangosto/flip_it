@@ -57,7 +57,7 @@ class CardDeck extends StatelessWidget {
                             selected: selected,
                             borderColor: border,
                             color: darkColor,
-                            content: const Center(),
+                            content: const SizedBox.shrink(),
                           )
                         : Opacity(
                             opacity: 0.2,
