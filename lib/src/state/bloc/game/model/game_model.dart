@@ -52,9 +52,13 @@ class GameController {
   }
 
   factory GameController.fromJson(Map<String, dynamic> json) {
+    List<CardCollection> collections = [];
+    for (var item in json["collections"]) {
+      collections.add(CardCollection.fromJson(item));
+    }
     return GameController(
       json["cards"],
-      json["collections"],
+      collections,
       json["hand"],
       GameStatus.values.elementAt(json["status"]),
     );
@@ -64,7 +68,8 @@ class GameController {
     var json = <String, dynamic>{};
     json["status"] = status.index;
     json["cards"] = cards;
-    json["collections"] = collections;
+    json["collections"] =
+        collections.map((collection) => collection.toJson()).toList();
     json["hand"] = hand;
     return json;
   }

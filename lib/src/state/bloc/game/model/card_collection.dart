@@ -14,6 +14,13 @@ class CardCollection {
   late int maxCardNumber;
   List<int> cards = [];
 
+  CardCollection.complete(
+    this.direction,
+    this.initialCard,
+    this.maxCardNumber,
+    this.cards,
+  );
+
   CardCollection(this.direction, this.maxCardNumber) {
     if (direction == Direction.up) {
       initialCard = 1;
@@ -21,6 +28,24 @@ class CardCollection {
       initialCard = maxCardNumber;
     }
     cards = [initialCard];
+  }
+
+  factory CardCollection.fromJson(Map<String, dynamic> json) {
+    return CardCollection.complete(
+      Direction.values.elementAt(json["direction"]),
+      json["initialCard"],
+      json["maxCardNumber"],
+      json["cards"],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    var json = <String, dynamic>{};
+    json["direction"] = direction.index;
+    json["initialCard"] = initialCard;
+    json["maxCardNumber"] = maxCardNumber;
+    json["cards"] = cards;
+    return json;
   }
 
   bool place(int card) {

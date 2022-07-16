@@ -12,7 +12,7 @@ Todo:
   Logic:
     ✘ Add Options to Shared Preferences @cancelled(22-07-14 12:55)
     ✔ Add Hydrated to Bloc Sound @done(22-07-14 12:56)
-    ☐ Add Hydrated to Bloc Game
+    ✔ Add Hydrated to Bloc Game @done(22-07-17 00:03)
   
   UI:
     ☐ Add Slow automatic scroll in *Credits page*

@@ -7,7 +7,7 @@ import 'model/game_model.dart';
 part 'game_event.dart';
 part 'game_state.dart';
 
-class GameBloc extends Bloc<GameEvent, GameState> {
+class GameBloc extends Bloc<GameEvent, GameState> with HydratedMixin {
   static int maxCardNumber = 80;
   static int handSize = 8;
   static const int interchangeCard = -5;
