@@ -159,6 +159,5 @@ void _playSongForRoute(BuildContext? context, Route<dynamic>? route) {
 }
 
 extension on Route<dynamic> {
-  String get str => 'route(${settings.name}: ${settings.arguments})';
   String? get name => settings.name;
 }

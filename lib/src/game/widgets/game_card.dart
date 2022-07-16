@@ -4,31 +4,7 @@ import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 
 Color getCardColor(int card) {
-  // final colors = [
-  //   backgroundColor,
-  //   Colors.lightGreen[400] ?? Colors.lightGreen,
-  //   Colors.cyan[200] ?? Colors.cyan,
-  //   purple,
-  //   Colors.pinkAccent[100] ?? Colors.pink,
-  //   Colors.redAccent,
-  //   Colors.orange[600] ?? Colors.orange,
-  //   Colors.purple[700] ?? Colors.teal,
-  //   Colors.blue[800] ?? Colors.blue,
-  //   Colors.blueGrey[600] ?? Colors.blueGrey,
-  // ];
-  final colors2 = [
-    backgroundColor,
-    green,
-    Colors.cyan[200] ?? Colors.cyan,
-    Colors.pinkAccent[100] ?? Colors.pink,
-    Colors.grey[300] ?? Colors.redAccent,
-    purple, //Colors.orange[300] ?? Colors.orange,
-    Colors.teal[200] ?? Colors.teal,
-    Colors.blueAccent,
-    darkColor,
-  ];
-
-  final colors3 = [
+  final colors = [
     backgroundColor,
     green,
     Colors.cyan[200] ?? Colors.cyan,
@@ -40,7 +16,7 @@ Color getCardColor(int card) {
     darkColor,
   ];
   if (card <= 0) return getSpecialCardsColor(card);
-  return colors3[(card / 10).floor()];
+  return colors[(card / 10).floor()];
 }
 
 Color? getBorderCardColor(int card) {

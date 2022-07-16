@@ -130,7 +130,6 @@ class SoundController {
       if (!decreasing && volume >= musicVolume) {
         t.cancel();
       }
-      ;
     });
   }
 

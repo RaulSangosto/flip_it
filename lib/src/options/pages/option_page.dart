@@ -187,7 +187,7 @@ class SliderItem extends StatelessWidget {
                     .headline6
                     ?.copyWith(color: textColor),
               ),
-              Container(child: Slider(value: value, onChanged: onChanged)),
+              Slider(value: value, onChanged: onChanged),
             ],
           ),
         ),
