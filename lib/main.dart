@@ -12,8 +12,8 @@ void main() async {
   );
   HydratedBlocOverrides.runZoned(
     () => SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) {
-    runApp(const MyApp());
+        .then((_) {
+      runApp(const MyApp());
     }),
     storage: storage,
   );

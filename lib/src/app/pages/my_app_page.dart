@@ -36,11 +36,8 @@ class MyApp extends StatelessWidget {
         path: '/board/play',
         name: 'play',
         pageBuilder: (context, state) {
-          BlocProvider.of<SoundBloc>(context).add(StopSong());
-
-          BlocProvider.of<SoundBloc>(context)
-              .add(PlaySong(ThemeSongs.playArea));
           return buildMyTransition(
+            name: 'play',
             child: const AnnotatedRegion<SystemUiOverlayStyle>(
               value: SystemUiOverlayStyle(
                 statusBarBrightness: Brightness.light,
@@ -56,8 +53,8 @@ class MyApp extends StatelessWidget {
           path: '/options',
           name: 'options',
           pageBuilder: (context, state) {
-            // BlocProvider.of<SoundBloc>(context).add(StopSong());
             return buildMyTransition(
+              name: 'options',
               child: const AnnotatedRegion<SystemUiOverlayStyle>(
                 value: SystemUiOverlayStyle(
                   statusBarBrightness: Brightness.dark,
@@ -73,10 +70,8 @@ class MyApp extends StatelessWidget {
               path: 'options/credits',
               name: 'credits',
               pageBuilder: (context, state) {
-                BlocProvider.of<SoundBloc>(context).add(StopSong());
-                BlocProvider.of<SoundBloc>(context)
-                    .add(PlaySong(ThemeSongs.credits));
                 return buildMyTransition(
+                  name: 'credits',
                   child: const AnnotatedRegion<SystemUiOverlayStyle>(
                     value: SystemUiOverlayStyle(
                       statusBarBrightness: Brightness.dark,
@@ -90,6 +85,7 @@ class MyApp extends StatelessWidget {
             ),
           ]),
     ],
+    observers: [MyNavObserver()],
   );
 
   // This widget is the root of your application.
@@ -117,4 +113,52 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
+
+class MyNavObserver extends NavigatorObserver {
+  MyNavObserver();
+
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) =>
+      _playSongForRoute(route.navigator?.context, route);
+
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) =>
+      _playSongForRoute(route.navigator?.context, previousRoute);
+
+  @override
+  void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) =>
+      _playSongForRoute(route.navigator?.context, route);
+
+  @override
+  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
+    if (newRoute != null) {
+      _playSongForRoute(newRoute.navigator?.context, newRoute);
+    }
+  }
+}
+
+void _playSongForRoute(BuildContext? context, Route<dynamic>? route) {
+  if (context != null) {
+    ThemeSongs? song;
+    switch (route?.name) {
+      case "main menu":
+        song = ThemeSongs.mainMenu;
+        break;
+      case "play":
+        song = ThemeSongs.playArea;
+        break;
+      case "credits":
+        song = ThemeSongs.credits;
+        break;
+    }
+    if (song != null) {
+      BlocProvider.of<SoundBloc>(context).add(PlaySong(song));
+    }
+  }
+}
+
+extension on Route<dynamic> {
+  String get str => 'route(${settings.name}: ${settings.arguments})';
+  String? get name => settings.name;
 }

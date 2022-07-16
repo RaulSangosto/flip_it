@@ -30,15 +30,29 @@ enum ThemeSongs {
   credits,
 }
 
+class MusicPlayer {
+  static final MusicPlayer _instance = MusicPlayer._();
+  late AudioPlayer musicPlayer;
+  late AudioPlayer helperPlayer;
+
+  static MusicPlayer get instance => _instance;
+
+  MusicPlayer._() {
+    musicPlayer = AudioPlayer();
+    helperPlayer = AudioPlayer();
+  }
+}
+
 class SoundController {
   final double musicVolume;
   final double soundVolume;
   final double helperVolume;
   final int poliphony;
   final int activeAudioPlayer;
-  final AudioPlayer helperAudioPlayer;
-  final AudioPlayer musicAudioPlayer;
+  final AudioPlayer helperAudioPlayer = MusicPlayer.instance.helperPlayer;
+  final AudioPlayer musicAudioPlayer = MusicPlayer.instance.musicPlayer;
   final List<AudioPlayer> audioPlayers;
+  ThemeSongs? currentSong;
 
   SoundController(
     this.musicVolume,
@@ -46,8 +60,6 @@ class SoundController {
     this.helperVolume,
     this.poliphony,
     this.activeAudioPlayer,
-    this.helperAudioPlayer,
-    this.musicAudioPlayer,
     this.audioPlayers,
   );
 
@@ -58,8 +70,6 @@ class SoundController {
       .5,
       2,
       0,
-      AudioPlayer(),
-      AudioPlayer(),
       List.generate(2, (index) => AudioPlayer()),
     );
   }
@@ -71,7 +81,6 @@ class SoundController {
     int? poliphony,
     int? activeAudioPlayer,
     AudioPlayer? helperAudioPlayer,
-    AudioPlayer? musicAudioPlayer,
     List<AudioPlayer>? audioPlayers,
   }) {
     return SoundController(
@@ -80,8 +89,6 @@ class SoundController {
       helperVolume ?? this.helperVolume,
       poliphony ?? this.poliphony,
       activeAudioPlayer ?? this.activeAudioPlayer,
-      helperAudioPlayer ?? this.helperAudioPlayer,
-      musicAudioPlayer ?? this.musicAudioPlayer,
       audioPlayers ?? this.audioPlayers,
     );
   }
@@ -119,6 +126,7 @@ class SoundController {
   }
 
   void playSong(ThemeSongs song) {
+    currentSong = song;
     musicAudioPlayer.setReleaseMode(ReleaseMode.loop);
     final assetSong = _getAssetSong(song);
     setMusicVolume(musicVolume);
@@ -229,8 +237,6 @@ class SoundController {
       json["helperVolume"],
       poliphony,
       json["activeAudioPlayer"],
-      AudioPlayer(),
-      AudioPlayer(),
       List.generate(poliphony, (index) => AudioPlayer()),
     );
   }

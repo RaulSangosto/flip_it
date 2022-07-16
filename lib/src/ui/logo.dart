@@ -110,7 +110,7 @@ class _LogoAnimatedState extends State<LogoAnimated>
                           : -factor / 4,
                       child: Text(
                         "A game about time",
-                        style: Theme.of(context).textTheme.headline5,
+                        style: _getTheme(context, factor),
                       ),
                     ),
                   ],
@@ -121,6 +121,16 @@ class _LogoAnimatedState extends State<LogoAnimated>
         },
       );
     });
+  }
+
+  TextStyle? _getTheme(BuildContext context, double factor) {
+    if (factor >= 800) {
+      return Theme.of(context).textTheme.headline4;
+    } else if (factor >= 500) {
+      return Theme.of(context).textTheme.headline5;
+    } else {
+      return Theme.of(context).textTheme.headline6;
+    }
   }
 }
 

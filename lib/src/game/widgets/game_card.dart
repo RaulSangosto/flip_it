@@ -108,6 +108,8 @@ String getCardDescription(int card) {
         return "Removes the last card in the group you place it in.";
       case -4:
         return "Adds/Subtracs 20 in the oposite direction of group you place it in.";
+      case -5:
+        return "Return the last card in the group you place it in.";
       default:
         return "";
     }
