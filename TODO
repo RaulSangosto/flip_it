@@ -20,9 +20,9 @@ Todo:
     ✔ Add mute Music button to *Main Menu* @done(22-07-13 17:28)
 
   Music:
-    ☐ Add CrossFade between songs
-    ☐ Allow Music to go through Pages
-    ☐ Decrease Music Volume
+    ✔ Add CrossFade between songs @done(22-07-16 21:41)
+    ✔ Allow Music to go through Pages @done(22-07-16 20:51)
+    ✔ Decrease Music Volume @done(22-07-16 21:41)
     ☐ Improve Music Songs
 
   Issues:

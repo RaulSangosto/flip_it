@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -100,8 +102,34 @@ class SoundController {
   bool helperMute() => helperVolume == 0;
 
   void setMusicVolume(double value) {
-    musicAudioPlayer.setVolume(value * .5);
-    // _setPreferencesVolume("music", value);
+    musicAudioPlayer.setVolume(value * .3);
+  }
+
+  void _crossFadeSong(double musicVolume, Source song) {
+    double volume = musicVolume;
+    bool decreasing = true;
+    sleep(const Duration(milliseconds: 500));
+    Timer.periodic(const Duration(milliseconds: 100), (Timer t) {
+      if (decreasing) {
+        volume -= .01;
+      } else {
+        volume += .01;
+      }
+      if (decreasing && volume <= 0) {
+        decreasing = false;
+        musicAudioPlayer.stop();
+        musicAudioPlayer.setVolume(0);
+        musicAudioPlayer.play(
+          song,
+          volume: 0,
+        );
+      }
+      musicAudioPlayer.setVolume(volume);
+      if (!decreasing && volume >= musicVolume) {
+        t.cancel();
+      }
+      ;
+    });
   }
 
   void setSoundVolume(double value) {
@@ -129,11 +157,7 @@ class SoundController {
     currentSong = song;
     musicAudioPlayer.setReleaseMode(ReleaseMode.loop);
     final assetSong = _getAssetSong(song);
-    setMusicVolume(musicVolume);
-    musicAudioPlayer.play(
-      assetSong,
-      volume: musicVolume,
-    );
+    _crossFadeSong(musicVolume * .3, assetSong);
   }
 
   void startTalkHelper() {
@@ -151,9 +175,7 @@ class SoundController {
     helperAudioPlayer.stop();
   }
 
-  void stopSong() {
-    musicAudioPlayer.pause();
-  }
+  void stopSong() {}
 
   Source _getAssetSong(ThemeSongs song) {
     String asset = "music/";
