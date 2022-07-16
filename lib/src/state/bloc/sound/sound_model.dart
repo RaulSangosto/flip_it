@@ -62,8 +62,9 @@ class SoundController {
     this.helperVolume,
     this.poliphony,
     this.activeAudioPlayer,
-    this.audioPlayers,
-  );
+    this.audioPlayers, {
+    this.currentSong,
+  });
 
   factory SoundController.initial() {
     return SoundController(
@@ -92,6 +93,7 @@ class SoundController {
       poliphony ?? this.poliphony,
       activeAudioPlayer ?? this.activeAudioPlayer,
       audioPlayers ?? this.audioPlayers,
+      currentSong: currentSong,
     );
   }
 
@@ -154,6 +156,9 @@ class SoundController {
   }
 
   void playSong(ThemeSongs song) {
+    if (song == currentSong) {
+      return;
+    }
     currentSong = song;
     musicAudioPlayer.setReleaseMode(ReleaseMode.loop);
     final assetSong = _getAssetSong(song);
