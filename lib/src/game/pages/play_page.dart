@@ -63,55 +63,61 @@ class PlayPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SafeArea(
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(
-                                flex: 4,
-                                child: TopBar(deck: gameState.controller.cards),
-                              ),
-                              Expanded(
-                                flex: 4,
-                                child: Container(
-                                  constraints:
-                                      const BoxConstraints(maxWidth: 1000),
-                                  child: PlayCardZone(
-                                      collections:
-                                          gameState.controller.collections),
+                      LayoutBuilder(builder: (context, constraints) {
+                        double ratio =
+                            constraints.maxWidth / constraints.maxHeight;
+                        bool wide = ratio >= 1;
+                        return SafeArea(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Expanded(
+                                  flex: wide ? 5 : 4,
+                                  child:
+                                      TopBar(deck: gameState.controller.cards),
                                 ),
-                              ),
-                              AnimatedContainer(
-                                duration: const Duration(
-                                  milliseconds: 50,
+                                Expanded(
+                                  flex: wide ? 5 : 4,
+                                  child: Container(
+                                    constraints:
+                                        const BoxConstraints(maxWidth: 1000),
+                                    child: PlayCardZone(
+                                        collections:
+                                            gameState.controller.collections),
+                                  ),
                                 ),
-                                height: helpMenuState.open
-                                    ? MediaQuery.of(context).size.height / 30
-                                    : MediaQuery.of(context).size.height / 10,
-                              ),
-                              Expanded(
-                                flex: 6,
-                                child: HandCards(
-                                  key: ValueKey(gameState.controller.cards),
-                                  cards: gameState.controller.hand,
+                                AnimatedContainer(
+                                  duration: const Duration(
+                                    milliseconds: 50,
+                                  ),
+                                  height: helpMenuState.open
+                                      ? MediaQuery.of(context).size.height / 30
+                                      : MediaQuery.of(context).size.height / 10,
                                 ),
-                              ),
-                              AnimatedContainer(
-                                duration: const Duration(
-                                  milliseconds: 50,
+                                Expanded(
+                                  flex: wide ? 5 : 6,
+                                  child: HandCards(
+                                    key: ValueKey(gameState.controller.cards),
+                                    cards: gameState.controller.hand,
+                                  ),
                                 ),
-                                height: !helpMenuState.open
-                                    ? MediaQuery.of(context).size.height / 30
-                                    : MediaQuery.of(context).size.height / 10,
-                              ),
-                              const Spacer(),
-                            ],
+                                AnimatedContainer(
+                                  duration: const Duration(
+                                    milliseconds: 50,
+                                  ),
+                                  height: !helpMenuState.open
+                                      ? MediaQuery.of(context).size.height / 30
+                                      : MediaQuery.of(context).size.height / 10,
+                                ),
+                                const Spacer(),
+                              ],
+                            ),
                           ),
-                        ),
-                      ),
+                        );
+                      }),
                       finised ? _getFinishMenu(win) : const SizedBox.shrink(),
                       HelpArea(
                         finished: finised,

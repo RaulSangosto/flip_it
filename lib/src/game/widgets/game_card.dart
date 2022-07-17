@@ -148,6 +148,22 @@ class GameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width;
+    double screenWidth = MediaQuery.of(context).size.width - 100;
+    double screenHeight = MediaQuery.of(context).size.height - 100;
+    double ratio = screenWidth / screenHeight;
+    if (ratio >= 1.5) {
+      width = screenWidth / 8;
+    } else if (ratio >= 1) {
+      width = screenWidth / 9;
+    } else if (ratio >= .8) {
+      width = screenWidth / 8;
+    } else if (ratio >= .6) {
+      width = screenWidth / 6;
+    } else {
+      width = screenWidth / 4;
+    }
+    debugPrint(ratio.toString());
     return Card(
       color: color ?? Theme.of(context).backgroundColor,
       shape: RoundedRectangleBorder(
@@ -159,7 +175,7 @@ class GameCard extends StatelessWidget {
       child: Container(
         constraints: const BoxConstraints(maxWidth: 150),
         child: AnimatedContainer(
-          width: (MediaQuery.of(context).size.width - 100) / 4,
+          width: width,
           padding: const EdgeInsets.all(8.0),
           duration: const Duration(milliseconds: 200),
           child: AspectRatio(
