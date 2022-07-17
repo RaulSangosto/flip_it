@@ -8,15 +8,16 @@ part 'game_event.dart';
 part 'game_state.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> with HydratedMixin {
-  static int maxCardNumber = 80;
-  static int handSize = 8;
   static const int interchangeCard = -5;
 
-  GameBloc() : super(GameInitial(maxCardNumber)) {
+  GameBloc() : super(GameInitial()) {
     on<PlaceCardInCollection>(
         (event, emit) => emit(_placeCardInCollection(event)));
     on<DrawCards>((event, emit) => emit(_drawCards(event)));
     on<ResetGame>((event, emit) => emit(_resetGame(event)));
+    on<ChangeMaxCardNumber>((event, emit) => emit(_changeMaxCardNumber(event)));
+    on<ChangeDecksNumber>((event, emit) => emit(_changeDecksNumber(event)));
+    on<ChangeHandSize>((event, emit) => emit(_changeHandSize(event)));
   }
 
   GameState _placeCardInCollection(PlaceCardInCollection event) {
@@ -52,7 +53,8 @@ class GameBloc extends Bloc<GameEvent, GameState> with HydratedMixin {
   GameState _drawCards(DrawCards event) {
     var cards = state.controller.cards;
     var hand = state.controller.hand;
-    var drawCards = cards.take(handSize - hand.length).toList();
+    var drawCards =
+        cards.take(state.controller.handSize - hand.length).toList();
     cards.removeRange(0, drawCards.length);
     hand.addAll(drawCards);
     final status = _getGameStatus();
@@ -72,7 +74,7 @@ class GameBloc extends Bloc<GameEvent, GameState> with HydratedMixin {
   }
 
   GameState _resetGame(ResetGame event) {
-    return GameInitial(maxCardNumber);
+    return GameInitial();
   }
 
   GameStatus _getGameStatus() {
@@ -122,5 +124,56 @@ class GameBloc extends Bloc<GameEvent, GameState> with HydratedMixin {
       return state.controller.toJson();
     }
     return null;
+  }
+
+  GameState _changeHandSize(ChangeHandSize event) {
+    List<int> options = [4, 6, 8, 10];
+    int index = options.indexOf(state.controller.handSize);
+    index += 1;
+    if (index >= options.length) {
+      index = 0;
+    }
+    final controller = GameController.fromSettings(
+      maxCardNumber: state.controller.maxCardNumber,
+      decksNumber: state.controller.decksNumber,
+      handSize: options[index],
+    );
+    controller.cards.shuffle();
+
+    return GamePlaying(controller);
+  }
+
+  GameState _changeDecksNumber(ChangeDecksNumber event) {
+    List<int> options = [1, 2, 3, 4];
+    int index = options.indexOf(state.controller.decksNumber);
+    index += 1;
+    if (index >= options.length) {
+      index = 0;
+    }
+    final controller = GameController.fromSettings(
+      maxCardNumber: state.controller.maxCardNumber,
+      decksNumber: options[index],
+      handSize: state.controller.handSize,
+    );
+    controller.cards.shuffle();
+
+    return GamePlaying(controller);
+  }
+
+  GameState _changeMaxCardNumber(ChangeMaxCardNumber event) {
+    List<int> options = [50, 60, 70, 80, 90, 100];
+    int index = options.indexOf(state.controller.maxCardNumber);
+    index += 1;
+    if (index >= options.length) {
+      index = 0;
+    }
+    final controller = GameController.fromSettings(
+      maxCardNumber: options[index],
+      decksNumber: state.controller.decksNumber,
+      handSize: state.controller.handSize,
+    );
+    controller.cards.shuffle();
+
+    return GamePlaying(controller);
   }
 }

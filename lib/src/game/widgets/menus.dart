@@ -145,9 +145,19 @@ class RestartGameDialog extends StatelessWidget {
 }
 
 class DrawerMenu extends StatelessWidget {
-  const DrawerMenu({
+  DrawerMenu({
     Key? key,
+    this.onRestart,
   }) : super(key: key);
+
+  Function(BuildContext)? onRestart;
+
+  void _onRestartOpenDialog(context) {
+    showDialog(
+      context: context,
+      builder: (_) => const RestartGameDialog(),
+    ).then((value) => Scaffold.of(context).closeEndDrawer());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -182,12 +192,7 @@ class DrawerMenu extends StatelessWidget {
             ),
             ListTile(
               title: ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (_) => const RestartGameDialog(),
-                  ).then((value) => Scaffold.of(context).closeEndDrawer());
-                },
+                onPressed: () => onRestart ?? _onRestartOpenDialog(context),
                 style: secondaryButton,
                 child: const Text("Restart"),
               ),

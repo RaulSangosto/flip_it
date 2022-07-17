@@ -23,7 +23,7 @@ class OptionsPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Spacer(
-                    flex: 2,
+                    flex: 3,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -36,8 +36,16 @@ class OptionsPage extends StatelessWidget {
                   ),
                   const Spacer(),
                   const VolumeControls(),
+                  const Spacer(),
+                  OutlinedButton(
+                    style: lightOutlineButtonStyle,
+                    onPressed: () {
+                      GoRouter.of(context).pushNamed("deck-settings");
+                    },
+                    child: const Text("Deck Settings"),
+                  ),
                   const Spacer(
-                    flex: 2,
+                    flex: 3,
                   ),
                   ElevatedButton(
                     style: secondaryButton,

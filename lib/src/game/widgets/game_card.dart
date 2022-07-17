@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import '../../theme/main_theme.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
@@ -10,9 +12,11 @@ Color getCardColor(int card) {
     Colors.cyan[200] ?? Colors.cyan,
     Colors.pink[200] ?? Colors.pink,
     grey,
-    purple, //Colors.orange[300] ?? Colors.orange,
+    purple,
     Colors.teal[200] ?? Colors.teal,
     Colors.indigo[400] ?? Colors.indigo,
+    Colors.teal[900] ?? Colors.teal,
+    Colors.grey[800] ?? Colors.blueGrey,
     darkColor,
   ];
   if (card <= 0) return getSpecialCardsColor(card);
@@ -139,29 +143,31 @@ class GameCard extends StatelessWidget {
     this.color,
     required this.selected,
     this.borderColor,
+    this.flex = 8,
   }) : super(key: key);
 
   final Widget content;
   final Color? color;
   final Color? borderColor;
   final bool selected;
+  final int flex;
 
   @override
   Widget build(BuildContext context) {
     double width;
-    double screenWidth = MediaQuery.of(context).size.width - 100;
-    double screenHeight = MediaQuery.of(context).size.height - 100;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     double ratio = screenWidth / screenHeight;
     if (ratio >= 1.5) {
-      width = screenWidth / 8;
+      width = screenWidth / flex;
     } else if (ratio >= 1) {
-      width = screenWidth / 9;
+      width = screenWidth / (flex + 1);
     } else if (ratio >= .8) {
-      width = screenWidth / 8;
+      width = screenWidth / flex;
     } else if (ratio >= .6) {
-      width = screenWidth / 6;
+      width = screenWidth / max(4, (flex - (flex / 4)));
     } else {
-      width = screenWidth / 4;
+      width = screenWidth / max(4, (flex / 2));
     }
     debugPrint(ratio.toString());
     return Card(
@@ -175,7 +181,7 @@ class GameCard extends StatelessWidget {
       child: Container(
         constraints: const BoxConstraints(maxWidth: 150),
         child: AnimatedContainer(
-          width: width,
+          width: width - 40 * ratio,
           padding: const EdgeInsets.all(8.0),
           duration: const Duration(milliseconds: 200),
           child: AspectRatio(

@@ -66,6 +66,7 @@ class _LogoAnimatedState extends State<LogoAnimated>
                 animation: _controller,
                 minRadius: 0,
                 child: Stack(
+                  fit: StackFit.expand,
                   children: [
                     Positioned.fill(
                       child: Align(
@@ -100,7 +101,10 @@ class _LogoAnimatedState extends State<LogoAnimated>
                         ),
                       ),
                     ),
-                    child!,
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 10.0),
+                      child: child!,
+                    ),
                     AnimatedPositioned(
                       curve: Curves.easeOut,
                       duration: const Duration(milliseconds: 250),

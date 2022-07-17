@@ -54,6 +54,36 @@ final ButtonStyle primaryButtonStyle = ElevatedButton.styleFrom(
   splashFactory: InkSparkle.splashFactory,
 );
 
+final ButtonStyle lightOutlineButtonStyle = OutlinedButton.styleFrom(
+  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+  side: const BorderSide(color: white, width: 2),
+  textStyle: deckTextStyle,
+  primary: white,
+  shape: buttonShape,
+  surfaceTintColor: white,
+  splashFactory: InkSparkle.splashFactory,
+);
+
+final ButtonStyle lightOutlineCompressedButtonStyle = OutlinedButton.styleFrom(
+  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+  side: const BorderSide(color: white, width: 2),
+  textStyle: deckTextStyle,
+  primary: white,
+  shape: buttonShape,
+  surfaceTintColor: white,
+  splashFactory: InkSparkle.splashFactory,
+);
+
+final ButtonStyle darkOutlineButtonStyle = OutlinedButton.styleFrom(
+  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+  side: const BorderSide(color: darkColor, width: 2),
+  textStyle: cardTextStyle,
+  primary: darkColor,
+  shape: buttonShape,
+  surfaceTintColor: darkColor,
+  splashFactory: InkSparkle.splashFactory,
+);
+
 final ButtonStyle secondaryButton = ElevatedButton.styleFrom(
   padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 20),
   textStyle: cardTextStyle,
@@ -86,6 +116,7 @@ ThemeData mainTheme = ThemeData.light().copyWith(
         ButtonStyle(foregroundColor: MaterialStateProperty.all<Color>(black)),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(style: primaryButtonStyle),
+  outlinedButtonTheme: OutlinedButtonThemeData(style: darkOutlineButtonStyle),
   buttonTheme: const ButtonThemeData(
       textTheme: ButtonTextTheme.primary,
       buttonColor: accentColor,

@@ -6,12 +6,14 @@ import 'package:go_router/go_router.dart';
 import '../../game/pages/play_page.dart';
 import '../../main_menu/pages/main_menu_page.dart';
 import '../../options/pages/credits.dart';
+import '../../options/pages/deck_settings_page.dart';
 import '../../options/pages/option_page.dart';
 import '../../state/bloc/game/game_bloc.dart';
 import '../../state/bloc/help_menu/helpmenu_bloc.dart';
 import '../../state/bloc/sound/sound_bloc.dart';
 import '../../state/bloc/sound/sound_model.dart';
 import '../../theme/main_theme.dart';
+import '../../tutorial/pages/tutorial_page.dart';
 import '../../ui/my_transition.dart';
 
 class MyApp extends StatelessWidget {
@@ -50,6 +52,23 @@ class MyApp extends StatelessWidget {
         },
       ),
       GoRoute(
+        path: '/tutorial',
+        name: 'tutorial',
+        pageBuilder: (context, state) {
+          return buildMyTransition(
+            name: 'tutorial',
+            child: const AnnotatedRegion<SystemUiOverlayStyle>(
+              value: SystemUiOverlayStyle(
+                statusBarBrightness: Brightness.light,
+                statusBarIconBrightness: Brightness.dark,
+              ),
+              child: TutorialPage(key: Key('tutorial')),
+            ),
+            color: darkColor,
+          );
+        },
+      ),
+      GoRoute(
           path: '/options',
           name: 'options',
           pageBuilder: (context, state) {
@@ -80,6 +99,23 @@ class MyApp extends StatelessWidget {
                     child: CreditsPage(key: Key('credits')),
                   ),
                   color: white,
+                );
+              },
+            ),
+            GoRoute(
+              path: 'options/deck-settings',
+              name: 'deck-settings',
+              pageBuilder: (context, state) {
+                return buildMyTransition(
+                  name: 'deck-settings',
+                  child: const AnnotatedRegion<SystemUiOverlayStyle>(
+                    value: SystemUiOverlayStyle(
+                      statusBarBrightness: Brightness.dark,
+                      statusBarIconBrightness: Brightness.light,
+                    ),
+                    child: DeckSettingsPage(key: Key('deck-settings')),
+                  ),
+                  color: darkColor,
                 );
               },
             ),

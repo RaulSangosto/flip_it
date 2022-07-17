@@ -10,6 +10,12 @@ class PlaceCardInCollection extends GameEvent {
   PlaceCardInCollection(this.card, this.collectionIndex);
 }
 
+class ChangeMaxCardNumber extends GameEvent {}
+
+class ChangeDecksNumber extends GameEvent {}
+
+class ChangeHandSize extends GameEvent {}
+
 class DrawCards extends GameEvent {}
 
 class ResetGame extends GameEvent {}

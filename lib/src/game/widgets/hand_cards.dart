@@ -13,21 +13,23 @@ class HandCards extends StatelessWidget {
   const HandCards({
     Key? key,
     required this.cards,
+    required this.handSize,
   }) : super(key: key);
 
   final List<int> cards;
+  final int handSize;
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 4,
+      spacing: 0,
       runSpacing: 2,
-      crossAxisAlignment: WrapCrossAlignment.start,
       direction: Axis.horizontal,
       children: [
         for (int i = 0; i < cards.length; i++)
           HandCard(
             card: cards[i],
+            handSize: handSize,
             key: ValueKey(i),
           )
       ],
@@ -39,9 +41,11 @@ class HandCard extends StatefulWidget {
   const HandCard({
     Key? key,
     required this.card,
+    required this.handSize,
   }) : super(key: key);
 
   final int card;
+  final int handSize;
 
   @override
   State<HandCard> createState() => _HandCardState();
@@ -103,6 +107,7 @@ class _HandCardState extends State<HandCard> {
           selected: selected,
           borderColor: border,
           color: getCardColor(widget.card),
+          flex: widget.handSize,
           content: isSpecial
               ? Icon(
                   getIconSpecialCard(widget.card),
@@ -119,10 +124,8 @@ class _HandCardState extends State<HandCard> {
         final Widget back = GameCard(
           selected: selected,
           color: darkColor,
-          content: const SizedBox(
-            width: 81,
-            height: 100,
-          ),
+          flex: widget.handSize,
+          content: const SizedBox.shrink(),
         );
 
         return GestureDetector(

@@ -8,8 +8,7 @@ abstract class GameState {
 }
 
 class GameInitial extends GameState {
-  GameInitial(int maxCardNumber)
-      : super(GameController.initial(maxCardNumber)) {
+  GameInitial() : super(GameController.initial()) {
     controller.cards.shuffle();
   }
 }

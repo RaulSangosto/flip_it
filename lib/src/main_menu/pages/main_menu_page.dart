@@ -12,7 +12,6 @@ class MainMenuPage extends StatelessWidget {
 
   final controller = FlipCardController();
 
-
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
@@ -46,7 +45,18 @@ class MainMenuPage extends StatelessWidget {
                   },
                   child: const Text("Play"),
                 ),
-                const Spacer(),
+                const SizedBox(
+                  height: 20,
+                ),
+                OutlinedButton(
+                  onPressed: () {
+                    GoRouter.of(context).pushNamed('tutorial');
+                  },
+                  child: const Text("How to Play"),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 const Text("Created by Raúl"),
                 BlocBuilder<SoundBloc, SoundState>(
                   builder: (context, state) {
@@ -60,7 +70,7 @@ class MainMenuPage extends StatelessWidget {
                   },
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 20,
                 ),
               ],
             ),

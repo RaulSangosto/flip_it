@@ -32,7 +32,8 @@ class PlayPage extends StatelessWidget {
             win = gameWon(gameState);
             if (!finised &&
                 gameState.controller.cards.isNotEmpty &&
-                gameState.controller.hand.length < 8) {
+                gameState.controller.hand.length <
+                    gameState.controller.handSize) {
               BlocProvider.of<GameBloc>(context).add(DrawCards());
             } else if (finised && win) {
               BlocProvider.of<SoundBloc>(context).add(PlaySound(SoundType.win));
@@ -49,7 +50,7 @@ class PlayPage extends StatelessWidget {
                     PlaySound(isOpened ? SoundType.open : SoundType.close));
               },
               backgroundColor: Colors.transparent,
-              endDrawer: const DrawerMenu(),
+              endDrawer: DrawerMenu(),
               body: BlocBuilder<HelpMenuBloc, HelpMenuState>(
                 builder: (context, helpMenuState) {
                   return Stack(
@@ -102,6 +103,7 @@ class PlayPage extends StatelessWidget {
                                   child: HandCards(
                                     key: ValueKey(gameState.controller.cards),
                                     cards: gameState.controller.hand,
+                                    handSize: gameState.controller.handSize,
                                   ),
                                 ),
                                 AnimatedContainer(

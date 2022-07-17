@@ -9,23 +9,24 @@ class GameController {
   final List<int> cards;
   final List<CardCollection> collections;
   final List<int> hand;
+  final int maxCardNumber;
+  final int decksNumber;
+  final int handSize;
 
   const GameController(
     this.cards,
     this.collections,
     this.hand,
     this.status,
+    this.maxCardNumber,
+    this.decksNumber,
+    this.handSize,
   );
 
-  factory GameController.initial(int maxCardNumber) {
+  factory GameController.initial() {
+    int maxCardNumber = 80;
     return GameController(
-      [
-        ...[
-          for (var i = 2; i < maxCardNumber; i++)
-            for (var j = 1; j <= 2; j++) i
-        ],
-        ...specialCards,
-      ],
+      _generateCards(maxCardNumber, 2),
       [
         CardCollection(Direction.up, maxCardNumber),
         CardCollection(Direction.up, maxCardNumber),
@@ -34,6 +35,30 @@ class GameController {
       ],
       [],
       GameStatus.playing,
+      maxCardNumber,
+      2,
+      8,
+    );
+  }
+
+  factory GameController.fromSettings({
+    required int maxCardNumber,
+    required int decksNumber,
+    required int handSize,
+  }) {
+    return GameController(
+      _generateCards(maxCardNumber, decksNumber),
+      [
+        CardCollection(Direction.up, maxCardNumber),
+        CardCollection(Direction.up, maxCardNumber),
+        CardCollection(Direction.down, maxCardNumber),
+        CardCollection(Direction.down, maxCardNumber),
+      ],
+      [],
+      GameStatus.playing,
+      maxCardNumber,
+      decksNumber,
+      handSize,
     );
   }
 
@@ -42,12 +67,18 @@ class GameController {
     List<int>? cards,
     List<CardCollection>? collections,
     List<int>? hand,
+    int? maxCardNumber,
+    int? decksNumber,
+    int? handSize,
   }) {
     return GameController(
       cards ?? this.cards,
       collections ?? this.collections,
       hand ?? this.hand,
       status ?? this.status,
+      maxCardNumber ?? this.maxCardNumber,
+      decksNumber ?? this.decksNumber,
+      handSize ?? this.handSize,
     );
   }
 
@@ -61,6 +92,9 @@ class GameController {
       collections,
       json["hand"],
       GameStatus.values.elementAt(json["status"]),
+      json["maxCardNumber"],
+      json["decksNumber"],
+      json["handSize"],
     );
   }
 
@@ -71,10 +105,23 @@ class GameController {
     json["collections"] =
         collections.map((collection) => collection.toJson()).toList();
     json["hand"] = hand;
+    json["maxCardNumber"] = maxCardNumber;
+    json["decksNumber"] = decksNumber;
+    json["handSize"] = handSize;
     return json;
   }
 
   bool win() {
     return status == GameStatus.win;
+  }
+
+  static List<int> _generateCards(int maxCardNumber, int decksNumber) {
+    return [
+      ...[
+        for (var i = 2; i < maxCardNumber; i++)
+          for (var j = 1; j <= decksNumber; j++) i
+      ],
+      ...specialCards,
+    ];
   }
 }
