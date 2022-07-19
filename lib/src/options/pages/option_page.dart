@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -29,9 +30,9 @@ class OptionsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Settings",
+                        "settings_title",
                         style: deckTextStyle,
-                      ),
+                      ).tr(),
                     ],
                   ),
                   const Spacer(),
@@ -42,7 +43,7 @@ class OptionsPage extends StatelessWidget {
                     onPressed: () {
                       GoRouter.of(context).pushNamed("deck-settings");
                     },
-                    child: const Text("Deck Settings"),
+                    child: const Text("deck_settings_button").tr(),
                   ),
                   const Spacer(
                     flex: 3,
@@ -52,7 +53,7 @@ class OptionsPage extends StatelessWidget {
                     onPressed: () {
                       GoRouter.of(context).pop();
                     },
-                    child: const Text("Back"),
+                    child: const Text("back_button").tr(),
                   ),
                   const Spacer(),
                 ],
@@ -78,7 +79,7 @@ class VolumeControls extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SliderItem(
-              text: "Music",
+              text: "music_settings_title".tr(),
               textColor: white,
               onChanged: (double value) {
                 BlocProvider.of<SoundBloc>(context).add(SetMusicVolume(value));
@@ -97,7 +98,7 @@ class VolumeControls extends StatelessWidget {
               ),
             ),
             SliderItem(
-              text: "Sound",
+              text: "sound_settings_title".tr(),
               textColor: white,
               onChanged: (double value) {
                 BlocProvider.of<SoundBloc>(context).add(SetSoundVolume(value));
@@ -116,7 +117,7 @@ class VolumeControls extends StatelessWidget {
               ),
             ),
             SliderItem(
-              text: "Dialog",
+              text: "dialog_settings_title".tr(),
               textColor: white,
               onChanged: (double value) {
                 BlocProvider.of<SoundBloc>(context).add(SetHelperVolume(value));
@@ -138,11 +139,14 @@ class VolumeControls extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                    child: Text("Credits",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6
-                            ?.copyWith(color: white))),
+                  child: Text(
+                    "credits_settings_title",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6
+                        ?.copyWith(color: white),
+                  ).tr(),
+                ),
                 IconButton(
                   onPressed: () {
                     GoRouter.of(context).pushNamed("credits");

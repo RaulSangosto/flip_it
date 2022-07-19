@@ -58,7 +58,7 @@ class TutorialPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                HelpArea(
+                const HelpArea(
                   finished: false,
                   win: false,
                 ),

@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../game/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,7 +45,8 @@ class _HelpAreaState extends State<HelpArea> {
                   children: [
                     AnimatedContainer(
                       margin: const EdgeInsets.only(top: 30),
-                      width: open ? MediaQuery.of(context).size.width - 20 : 140,
+                      width:
+                          open ? MediaQuery.of(context).size.width - 20 : 140,
                       height: open ? 130 : 60,
                       duration: const Duration(milliseconds: 200),
                       child: Card(
@@ -73,7 +75,8 @@ class _HelpAreaState extends State<HelpArea> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     AnimatedContainer(
-                                      duration: const Duration(milliseconds: 200),
+                                      duration:
+                                          const Duration(milliseconds: 200),
                                       width: open ? 40 : 40,
                                       height: open ? 50 : 40,
                                       margin:
@@ -91,7 +94,8 @@ class _HelpAreaState extends State<HelpArea> {
                                             Positioned(
                                               child: Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.spaceEvenly,
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
                                                 children: [
                                                   ...List.generate(
                                                     2,
@@ -121,7 +125,8 @@ class _HelpAreaState extends State<HelpArea> {
                                                   color: white,
                                                   borderRadius:
                                                       BorderRadius.vertical(
-                                                    bottom: Radius.circular(100),
+                                                    bottom:
+                                                        Radius.circular(100),
                                                   ),
                                                 ),
                                               ),
@@ -255,9 +260,9 @@ class HelpTextArea extends StatelessWidget {
 
   String getFinisedText(bool win) {
     if (win) {
-      return "Congrats! You packed all the cards nicely";
+      return "finished_text_win".tr();
     } else {
-      return "Oh no! Do you want to try again?";
+      return "finished_text_lose".tr();
     }
   }
 }

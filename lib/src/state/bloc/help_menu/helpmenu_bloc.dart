@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../game/widgets/card_group.dart';
@@ -52,14 +53,14 @@ class HelpMenuBloc extends Bloc<HelpMenuEvent, HelpMenuState> {
   }
 
   String _getOpenMessage() {
-    return "Wich card do you need help with?";
+    return "helper_open_message".tr();
   }
 
   String _getCloseMessage() {
-    return "Bye!";
+    return "helper_close_message".tr();
   }
 
   String _getMessageDeck(List<int> cards) {
-    return "This is the Deck, there are ${cards.length} cards left.";
+    return "helper_deck_message".tr(args: [cards.length.toString()]);
   }
 }

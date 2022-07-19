@@ -1,9 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flipit/src/state/bloc/game/game_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../state/bloc/sound/sound_bloc.dart';
 import '../../theme/main_theme.dart';
 
 class DeckSettingsPage extends StatelessWidget {
@@ -30,9 +29,9 @@ class DeckSettingsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Deck Settings",
+                        "deck_settings_title",
                         style: deckTextStyle,
-                      ),
+                      ).tr(),
                     ],
                   ),
                   const Spacer(
@@ -52,9 +51,9 @@ class DeckSettingsPage extends StatelessWidget {
                       ),
                       Flexible(
                         child: Text(
-                          "If you have an ongoing game, changing any of this settings will resset the game and remove all progress.",
+                          "deck_settings_warning",
                           style: bodyTextWhiteStyle.copyWith(fontSize: 12),
-                        ),
+                        ).tr(),
                       ),
                     ],
                   ),
@@ -66,7 +65,7 @@ class DeckSettingsPage extends StatelessWidget {
                     onPressed: () {
                       GoRouter.of(context).pop();
                     },
-                    child: const Text("Back"),
+                    child: const Text("back_button").tr(),
                   ),
                   const Spacer(),
                 ],

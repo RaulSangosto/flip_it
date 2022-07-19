@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -128,6 +131,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     precacheImage(const AssetImage("assets/images/Logo_text.png"), context);
+    log(EasyLocalization.of(context)?.locale.toString() ?? "",
+        name: "${toString()}# locale");
+    log(Intl.defaultLocale.toString(),
+        name: "${toString()}# Intl.defaultLocale");
     return MultiBlocProvider(
       providers: [
         BlocProvider<GameBloc>(
@@ -145,6 +152,9 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         routeInformationParser: _router.routeInformationParser,
         routerDelegate: _router.routerDelegate,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
         theme: mainTheme,
       ),
     );

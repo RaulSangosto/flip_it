@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flipit/src/state/bloc/sound/sound_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,17 +46,17 @@ class LoseMenu extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () => _goSettings(context),
-              child: const Text("Settings"),
+              child: const Text("settings_button").tr(),
             ),
             const Spacer(),
             ElevatedButton(
               onPressed: () => _goMainMenu(context),
-              child: const Text("Go To Menu"),
+              child: const Text("go_to_menu_button").tr(),
             ),
             const Spacer(),
             ElevatedButton(
               onPressed: () => _goRetry(context),
-              child: const Text("Play Again"),
+              child: const Text("play_again_button").tr(),
             ),
             const Spacer(
               flex: 7,
@@ -96,19 +97,19 @@ class WinMenu extends StatelessWidget {
               ElevatedButton(
                 style: secondaryButton,
                 onPressed: () => _goSettings(context),
-                child: const Text("Settings"),
+                child: const Text("settings_button").tr(),
               ),
               const Spacer(),
               ElevatedButton(
                 style: secondaryButton,
                 onPressed: () => _goMainMenu(context),
-                child: const Text("Go to Menu"),
+                child: const Text("go_to_menu_button").tr(),
               ),
               const Spacer(),
               ElevatedButton(
                 style: secondaryButton,
                 onPressed: () => _goRetry(context),
-                child: const Text("Play Again"),
+                child: const Text("play_again_button").tr(),
               ),
               const Spacer(
                 flex: 7,
@@ -127,18 +128,20 @@ class RestartGameDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Restart Game?"),
-      content: const Text("Are you sure you want to remove your progress?"),
+      title: const Text("restart_game_alert_dialog_title").tr(),
+      content: const Text("restart_game_alert_dialog_content").tr(),
       actions: [
         TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text("No")),
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text("restart_game_alert_dialog_denie").tr(),
+        ),
         TextButton(
-            onPressed: () {
-              BlocProvider.of<GameBloc>(context).add(ResetGame());
-              Navigator.of(context).pop();
-            },
-            child: const Text("Yes"))
+          onPressed: () {
+            BlocProvider.of<GameBloc>(context).add(ResetGame());
+            Navigator.of(context).pop();
+          },
+          child: const Text("restart_game_alert_dialog_accept").tr(),
+        )
       ],
     );
   }
@@ -172,9 +175,9 @@ class DrawerMenu extends StatelessWidget {
             DrawerHeader(
               child: Center(
                 child: Text(
-                  "Options",
+                  "drawer_title",
                   style: deckTextStyle,
-                ),
+                ).tr(),
               ),
             ),
             ListTile(
@@ -184,7 +187,7 @@ class DrawerMenu extends StatelessWidget {
                   GoRouter.of(context).pushNamed('options');
                 },
                 style: secondaryButton,
-                child: const Text("Settings"),
+                child: const Text("settings_button").tr(),
               ),
             ),
             const SizedBox(
@@ -194,7 +197,7 @@ class DrawerMenu extends StatelessWidget {
               title: ElevatedButton(
                 onPressed: () => onRestart ?? _onRestartOpenDialog(context),
                 style: secondaryButton,
-                child: const Text("Restart"),
+                child: const Text("restart_button").tr(),
               ),
             ),
             const SizedBox(
@@ -207,7 +210,7 @@ class DrawerMenu extends StatelessWidget {
                   GoRouter.of(context).goNamed('main menu');
                 },
                 style: secondaryButton,
-                child: const Text("Exit"),
+                child: const Text("exit_button").tr(),
               ),
             ),
             const SizedBox(
@@ -219,7 +222,7 @@ class DrawerMenu extends StatelessWidget {
                   Scaffold.of(context).closeEndDrawer();
                 },
                 style: secondaryButton,
-                child: const Text("Resume"),
+                child: const Text("resume_button").tr(),
               ),
             ),
           ],

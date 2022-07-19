@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:easy_localization/easy_localization.dart';
+
 import '../../theme/main_theme.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
@@ -77,21 +79,21 @@ IconData getIconSpecialCard(int card) {
 
 String getCardDescription(int card) {
   if (card > 0) {
-    return "It´s a normal card. The number $card";
+    return "helper_normal_card_message".tr(args: [card.toString()]);
   } else {
     switch (card) {
       case 0:
-        return "Resets the group to its starting value.";
+        return "helper_special_card_0_message".tr();
       case -1:
-        return "Changes direction of the group you place it in";
+        return "helper_special_card_1_message".tr();
       case -2:
-        return "Shuffles the group you place it in.";
+        return "helper_special_card_2_message".tr();
       case -3:
-        return "Removes the last card in the group you place it in.";
+        return "helper_special_card_3_message".tr();
       case -4:
-        return "Adds/Subtracs 20 in the oposite direction of group you place it in.";
+        return "helper_special_card_4_message".tr();
       case -5:
-        return "Return the last card in the group you place it in.";
+        return "helper_special_card_5_message".tr();
       default:
         return "";
     }

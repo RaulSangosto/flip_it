@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../state/bloc/sound/sound_bloc.dart';
 import '../../ui/logo.dart';
@@ -43,7 +44,7 @@ class MainMenuPage extends StatelessWidget {
                   onPressed: () {
                     GoRouter.of(context).pushNamed('play');
                   },
-                  child: const Text("Play"),
+                  child: const Text("play_button").tr(),
                 ),
                 const SizedBox(
                   height: 20,
@@ -52,12 +53,12 @@ class MainMenuPage extends StatelessWidget {
                   onPressed: () {
                     GoRouter.of(context).pushNamed('tutorial');
                   },
-                  child: const Text("How to Play"),
+                  child: const Text("how_to_play_button").tr(),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                const Text("Created by Raúl"),
+                const Text("author_name").tr(args: ["Raúl"]),
                 BlocBuilder<SoundBloc, SoundState>(
                   builder: (context, state) {
                     return IconButton(

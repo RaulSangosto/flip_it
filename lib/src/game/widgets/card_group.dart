@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -183,18 +184,11 @@ class _CardGroupCollectionState extends State<CardGroupCollection>
       },
     );
   }
-
-  _getCardGroupColor(int card, int maxNumberCard) {
-    if (card == maxNumberCard) {
-      return darkColor;
-    } else {
-      return getCardColor(card);
-    }
-  }
 }
 
 String getCollectionDescription(CardCollection collection) {
-  final direction =
-      collection.direction == Direction.up ? "ascendent" : "descendent";
-  return "Place your cards here in $direction order.";
+  final direction = collection.direction == Direction.up
+      ? "helper_collection_direction_ascend_message".tr()
+      : "helper_collection_direction_descend_message".tr();
+  return "helper_collection_message".tr(args: [direction]);
 }
