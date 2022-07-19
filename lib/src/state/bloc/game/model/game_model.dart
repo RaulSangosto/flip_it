@@ -2,7 +2,7 @@ import 'card_collection.dart';
 
 enum GameStatus { win, lose, playing }
 
-final specialCards = [0, -1, -2, -2, -3, -3, -4, -4, -5];
+enum SpecialCardsAmount { none, minimal, normal, extra }
 
 class GameController {
   final GameStatus status;
@@ -12,6 +12,7 @@ class GameController {
   final int maxCardNumber;
   final int decksNumber;
   final int handSize;
+  final SpecialCardsAmount specialCardsAmount;
 
   const GameController(
     this.cards,
@@ -21,12 +22,16 @@ class GameController {
     this.maxCardNumber,
     this.decksNumber,
     this.handSize,
+    this.specialCardsAmount,
   );
 
   factory GameController.initial() {
     int maxCardNumber = 80;
+    int decksNumber = 2;
+    SpecialCardsAmount specialCardsAmount = SpecialCardsAmount.normal;
+
     return GameController(
-      _generateCards(maxCardNumber, 2),
+      _generateCards(maxCardNumber, decksNumber, specialCardsAmount),
       [
         CardCollection(Direction.up, maxCardNumber),
         CardCollection(Direction.up, maxCardNumber),
@@ -36,8 +41,9 @@ class GameController {
       [],
       GameStatus.playing,
       maxCardNumber,
-      2,
+      decksNumber,
       8,
+      specialCardsAmount,
     );
   }
 
@@ -45,9 +51,10 @@ class GameController {
     required int maxCardNumber,
     required int decksNumber,
     required int handSize,
+    required SpecialCardsAmount specialCardsAmount,
   }) {
     return GameController(
-      _generateCards(maxCardNumber, decksNumber),
+      _generateCards(maxCardNumber, decksNumber, specialCardsAmount),
       [
         CardCollection(Direction.up, maxCardNumber),
         CardCollection(Direction.up, maxCardNumber),
@@ -59,6 +66,7 @@ class GameController {
       maxCardNumber,
       decksNumber,
       handSize,
+      specialCardsAmount,
     );
   }
 
@@ -70,6 +78,7 @@ class GameController {
     int? maxCardNumber,
     int? decksNumber,
     int? handSize,
+    SpecialCardsAmount? specialCardsAmount,
   }) {
     return GameController(
       cards ?? this.cards,
@@ -79,6 +88,7 @@ class GameController {
       maxCardNumber ?? this.maxCardNumber,
       decksNumber ?? this.decksNumber,
       handSize ?? this.handSize,
+      specialCardsAmount ?? this.specialCardsAmount,
     );
   }
 
@@ -95,6 +105,7 @@ class GameController {
       json["maxCardNumber"],
       json["decksNumber"],
       json["handSize"],
+      SpecialCardsAmount.values.elementAt(json["specialCardsAmount"]),
     );
   }
 
@@ -108,6 +119,7 @@ class GameController {
     json["maxCardNumber"] = maxCardNumber;
     json["decksNumber"] = decksNumber;
     json["handSize"] = handSize;
+    json["specialCardsAmount"] = specialCardsAmount.index;
     return json;
   }
 
@@ -115,13 +127,33 @@ class GameController {
     return status == GameStatus.win;
   }
 
-  static List<int> _generateCards(int maxCardNumber, int decksNumber) {
+  static List<int> _generateCards(int maxCardNumber, int decksNumber,
+      SpecialCardsAmount specialCardsAmount) {
     return [
       ...[
         for (var i = 2; i < maxCardNumber; i++)
           for (var j = 1; j <= decksNumber; j++) i
       ],
-      ...specialCards,
+      ..._generateSpecialCards(specialCardsAmount),
     ];
+  }
+
+  static List<int> _generateSpecialCards(
+      SpecialCardsAmount specialCardsAmount) {
+    switch (specialCardsAmount) {
+      case SpecialCardsAmount.none:
+        return [];
+      case SpecialCardsAmount.minimal:
+        return [0, -1, -2, -3, -4, -5];
+      case SpecialCardsAmount.normal:
+        return [0, -1, -2, -2, -3, -3, -4, -4, -5];
+      case SpecialCardsAmount.extra:
+        return [
+          ...[0, -1, -2, -2, -3, -3, -4, -4, -5],
+          ...[0, -1, -2, -2, -3, -3, -4, -4, -5]
+        ];
+      default:
+        return [0, -1, -2, -3, -4, -5];
+    }
   }
 }

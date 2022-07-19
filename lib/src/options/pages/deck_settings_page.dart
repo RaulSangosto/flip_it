@@ -106,6 +106,12 @@ class DeckSettingsItems extends StatelessWidget {
               onClick: () =>
                   BlocProvider.of<GameBloc>(context).add(ChangeHandSize()),
             ),
+            SettingsItem(
+              text: "Special Cards Amount",
+              value: state.controller.specialCardsAmount.name,
+              onClick: () => BlocProvider.of<GameBloc>(context)
+                  .add(ChangeSpecialCardsAmount()),
+            ),
           ],
         );
       },

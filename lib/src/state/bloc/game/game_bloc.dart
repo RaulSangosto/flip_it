@@ -18,6 +18,8 @@ class GameBloc extends Bloc<GameEvent, GameState> with HydratedMixin {
     on<ChangeMaxCardNumber>((event, emit) => emit(_changeMaxCardNumber(event)));
     on<ChangeDecksNumber>((event, emit) => emit(_changeDecksNumber(event)));
     on<ChangeHandSize>((event, emit) => emit(_changeHandSize(event)));
+    on<ChangeSpecialCardsAmount>(
+        (event, emit) => emit(_changeSpecialCardsAmount(event)));
   }
 
   GameState _placeCardInCollection(PlaceCardInCollection event) {
@@ -74,7 +76,15 @@ class GameBloc extends Bloc<GameEvent, GameState> with HydratedMixin {
   }
 
   GameState _resetGame(ResetGame event) {
-    return GameInitial();
+    final controller = GameController.fromSettings(
+      maxCardNumber: state.controller.maxCardNumber,
+      decksNumber: state.controller.decksNumber,
+      handSize: state.controller.handSize,
+      specialCardsAmount: state.controller.specialCardsAmount,
+    );
+    controller.cards.shuffle();
+
+    return GamePlaying(controller);
   }
 
   GameStatus _getGameStatus() {
@@ -137,6 +147,7 @@ class GameBloc extends Bloc<GameEvent, GameState> with HydratedMixin {
       maxCardNumber: state.controller.maxCardNumber,
       decksNumber: state.controller.decksNumber,
       handSize: options[index],
+      specialCardsAmount: state.controller.specialCardsAmount,
     );
     controller.cards.shuffle();
 
@@ -154,6 +165,7 @@ class GameBloc extends Bloc<GameEvent, GameState> with HydratedMixin {
       maxCardNumber: state.controller.maxCardNumber,
       decksNumber: options[index],
       handSize: state.controller.handSize,
+      specialCardsAmount: state.controller.specialCardsAmount,
     );
     controller.cards.shuffle();
 
@@ -171,9 +183,32 @@ class GameBloc extends Bloc<GameEvent, GameState> with HydratedMixin {
       maxCardNumber: options[index],
       decksNumber: state.controller.decksNumber,
       handSize: state.controller.handSize,
+      specialCardsAmount: state.controller.specialCardsAmount,
     );
     controller.cards.shuffle();
 
+    return GamePlaying(controller);
+  }
+
+  GameState _changeSpecialCardsAmount(ChangeSpecialCardsAmount event) {
+    List<SpecialCardsAmount> options = [
+      SpecialCardsAmount.none,
+      SpecialCardsAmount.minimal,
+      SpecialCardsAmount.normal,
+      SpecialCardsAmount.extra
+    ];
+    int index = options.indexOf(state.controller.specialCardsAmount);
+    index += 1;
+    if (index >= options.length) {
+      index = 0;
+    }
+    final controller = GameController.fromSettings(
+      maxCardNumber: state.controller.maxCardNumber,
+      decksNumber: state.controller.decksNumber,
+      handSize: state.controller.handSize,
+      specialCardsAmount: options[index],
+    );
+    controller.cards.shuffle();
     return GamePlaying(controller);
   }
 }

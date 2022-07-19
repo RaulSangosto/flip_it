@@ -18,7 +18,7 @@ Todo:
   UI:
     ☐ Add Slow automatic scroll in *Credits page*
     ☐ Make max card number always black
-    ☐ Add special cards configuration to Deck settings
+    ✔ Add special cards configuration to Deck settings @done(22-07-19 20:20)
     ✔ Remove Keney credit from *Main Menu* @done(22-07-13 17:28)
     ✔ Add mute Music button to *Main Menu* @done(22-07-13 17:28)
 

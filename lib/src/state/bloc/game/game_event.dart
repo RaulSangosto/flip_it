@@ -16,6 +16,8 @@ class ChangeDecksNumber extends GameEvent {}
 
 class ChangeHandSize extends GameEvent {}
 
+class ChangeSpecialCardsAmount extends GameEvent {}
+
 class DrawCards extends GameEvent {}
 
 class ResetGame extends GameEvent {}
