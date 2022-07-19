@@ -2,9 +2,9 @@
 Todo:
 
   Design:
+    ☐ Add Tutorial to explain game
     ✔ Adapt Layout to fit multiple screens sizes @done(22-07-14 21:56)
     ✔ Improve Max Size to cards @done(22-07-17 09:49)
-    ☐ Add Tutorial to explain game
     ✔ Add Max Size to Logo @done(22-07-14 21:56)
     ✔ Add Drawer open maxSize @done(22-07-14 21:56)
     ✔ Add Credits Items Max Width @done(22-07-14 21:56)
@@ -17,14 +17,17 @@ Todo:
   
   UI:
     ☐ Add Slow automatic scroll in *Credits page*
+    ☐ Make max card number always black
+    ☐ Add special cards configuration to Deck settings
     ✔ Remove Keney credit from *Main Menu* @done(22-07-13 17:28)
     ✔ Add mute Music button to *Main Menu* @done(22-07-13 17:28)
 
   Music:
+    ☐ Improve Music Songs
     ✔ Add CrossFade between songs @done(22-07-16 21:41)
     ✔ Allow Music to go through Pages @done(22-07-16 20:51)
     ✔ Decrease Music Volume @done(22-07-16 21:41)
-    ☐ Improve Music Songs
+    
 
   Issues:
     ☐ Crash sometimes when helper talks

@@ -78,7 +78,6 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> with HydratedMixin {
   }
 
   SoundState _playSong(PlaySong event) {
-    state.controller.stopSong();
     state.controller.playSong(event.song);
 
     return SoundActive(state.controller.copyWith());

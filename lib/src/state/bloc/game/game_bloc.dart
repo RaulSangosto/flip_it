@@ -90,7 +90,7 @@ class GameBloc extends Bloc<GameEvent, GameState> with HydratedMixin {
         return GameStatus.lose;
       }
     } else if (_canPlaceCards(hand, state.controller.collections) ||
-        hand.length < 8) {
+        hand.length < state.controller.handSize) {
       return GameStatus.playing;
     } else {
       return GameStatus.lose;

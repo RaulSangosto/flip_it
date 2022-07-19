@@ -110,8 +110,8 @@ class SoundController {
   void _crossFadeSong(double musicVolume, Source song) {
     double volume = musicVolume;
     bool decreasing = true;
-    sleep(const Duration(milliseconds: 500));
-    Timer.periodic(const Duration(milliseconds: 100), (Timer t) {
+    sleep(const Duration(milliseconds: 100));
+    Timer.periodic(const Duration(milliseconds: 50), (Timer t) {
       if (decreasing) {
         volume -= .01;
       } else {
@@ -179,7 +179,9 @@ class SoundController {
     helperAudioPlayer.stop();
   }
 
-  void stopSong() {}
+  void stopSong() {
+    musicAudioPlayer.stop();
+  }
 
   Source _getAssetSong(ThemeSongs song) {
     String asset = "music/";
