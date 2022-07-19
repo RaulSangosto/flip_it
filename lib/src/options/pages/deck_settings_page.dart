@@ -88,25 +88,25 @@ class DeckSettingsItems extends StatelessWidget {
         return Column(
           children: [
             SettingsItem(
-              text: "Max Card Number",
+              text: "max_card_settings_title".tr(),
               value: state.controller.maxCardNumber,
               onClick: () =>
                   BlocProvider.of<GameBloc>(context).add(ChangeMaxCardNumber()),
             ),
             SettingsItem(
-              text: "Number of Decks",
+              text: "decks_number_settings_title".tr(),
               value: state.controller.decksNumber,
               onClick: () =>
                   BlocProvider.of<GameBloc>(context).add(ChangeDecksNumber()),
             ),
             SettingsItem(
-              text: "Hand Size",
+              text: "hand_size_settings_title".tr(),
               value: state.controller.handSize,
               onClick: () =>
                   BlocProvider.of<GameBloc>(context).add(ChangeHandSize()),
             ),
             SettingsItem(
-              text: "Special Cards Amount",
+              text: "special_cards_settings_title".tr(),
               value: state.controller.specialCardsAmount.name,
               onClick: () => BlocProvider.of<GameBloc>(context)
                   .add(ChangeSpecialCardsAmount()),
