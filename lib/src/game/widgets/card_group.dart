@@ -114,26 +114,41 @@ class _CardGroupCollectionState extends State<CardGroupCollection>
                   transform: Matrix4.identity()
                     ..scale(cardWidth + scale, cardWidth + scale,
                         cardWidth + scale),
-                  child: GameCard(
-                    selected: selected,
-                    color: getCardColor(card),
-                    borderColor: border,
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          card.toString(),
-                          style: cardTextStyle.copyWith(
-                              color: getContentCardColor(card)),
+                  child: BlocBuilder<GameBloc, GameState>(
+                    builder: (context, gameState) {
+                      return GameCard(
+                        selected: selected,
+                        color: getCardColor(
+                          card,
+                          maxCardNumber: gameState.controller.maxCardNumber,
                         ),
-                        Icon(
-                          icon,
-                          color: getContentCardColor(card),
-                          size: 36,
+                        borderColor: border,
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              card.toString(),
+                              style: cardTextStyle.copyWith(
+                                  color: getContentCardColor(
+                                card,
+                                maxCardNumber:
+                                    gameState.controller.maxCardNumber,
+                              )),
+                            ),
+                            Icon(
+                              icon,
+                              color: getContentCardColor(
+                                card,
+                                maxCardNumber:
+                                    gameState.controller.maxCardNumber,
+                              ),
+                              size: 36,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
                 ),
               ),
@@ -167,6 +182,14 @@ class _CardGroupCollectionState extends State<CardGroupCollection>
         // player.play(AssetSource('sounds/playcard.wav'));
       },
     );
+  }
+
+  _getCardGroupColor(int card, int maxNumberCard) {
+    if (card == maxNumberCard) {
+      return darkColor;
+    } else {
+      return getCardColor(card);
+    }
   }
 }
 

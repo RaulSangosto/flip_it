@@ -5,7 +5,7 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 
-Color getCardColor(int card) {
+Color getCardColor(int card, {int maxCardNumber = 100}) {
   final colors = [
     backgroundColor,
     green,
@@ -20,6 +20,7 @@ Color getCardColor(int card) {
     darkColor,
   ];
   if (card <= 0) return getSpecialCardsColor(card);
+  if (card == maxCardNumber) return darkColor;
   return colors[(card / 10).floor()];
 }
 
@@ -29,8 +30,9 @@ Color? getBorderCardColor(int card) {
   return null;
 }
 
-Color getContentCardColor(int card) {
-  if (card > 0 && card < 80) return textColor;
+Color getContentCardColor(int card, {int maxCardNumber = 100}) {
+  if (card == maxCardNumber) return white;
+  if (card > 0 && card < 70) return textColor;
   return white;
 }
 
