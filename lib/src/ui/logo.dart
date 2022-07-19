@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../state/bloc/sound/sound_bloc.dart';
 import '../state/bloc/sound/sound_model.dart';
 import '../theme/main_theme.dart';
@@ -113,7 +114,7 @@ class _LogoAnimatedState extends State<LogoAnimated>
                           ? factor / 4
                           : -factor / 4,
                       child: Text(
-                        "A game about time",
+                        "logo_subtitle".tr(),
                         style: _getTheme(context, factor),
                       ),
                     ),
