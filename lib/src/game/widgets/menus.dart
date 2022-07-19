@@ -131,12 +131,12 @@ class RestartGameDialog extends StatelessWidget {
       content: const Text("Are you sure you want to remove your progress?"),
       actions: [
         TextButton(
-            onPressed: () => GoRouter.of(context).pop(),
+            onPressed: () => Navigator.of(context).pop(),
             child: const Text("No")),
         TextButton(
             onPressed: () {
               BlocProvider.of<GameBloc>(context).add(ResetGame());
-              GoRouter.of(context).pop();
+              Navigator.of(context).pop();
             },
             child: const Text("Yes"))
       ],
