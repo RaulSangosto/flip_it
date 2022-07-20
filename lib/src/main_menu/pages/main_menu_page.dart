@@ -58,17 +58,22 @@ class MainMenuPage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text("author_name").tr(args: ["Raúl"]),
-                BlocBuilder<SoundBloc, SoundState>(
-                  builder: (context, state) {
-                    return IconButton(
-                      onPressed: () => BlocProvider.of<SoundBloc>(context)
-                          .add(ToggleMusicVolume()),
-                      icon: Icon(state.controller.musicMute()
-                          ? Icons.music_off_rounded
-                          : Icons.music_note_rounded),
-                    );
-                  },
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("author_name").tr(args: ["Raúl Sánchez"]),
+                    BlocBuilder<SoundBloc, SoundState>(
+                      builder: (context, state) {
+                        return IconButton(
+                          onPressed: () => BlocProvider.of<SoundBloc>(context)
+                              .add(ToggleMusicVolume()),
+                          icon: Icon(state.controller.musicMute()
+                              ? Icons.music_off_rounded
+                              : Icons.music_note_rounded),
+                        );
+                      },
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 20,

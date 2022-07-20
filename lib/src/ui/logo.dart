@@ -114,9 +114,9 @@ class _LogoAnimatedState extends State<LogoAnimated>
                           ? factor / 4
                           : -factor / 4,
                       child: Text(
-                        "logo_subtitle".tr(),
+                        "logo_subtitle",
                         style: _getTheme(context, factor),
-                      ),
+                      ).tr(),
                     ),
                   ],
                 ),
