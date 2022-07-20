@@ -260,9 +260,9 @@ class HelpTextArea extends StatelessWidget {
 
   String getFinisedText(bool win) {
     if (win) {
-      return "finished_text_win".tr();
+      return "helper_finished_text_win".tr();
     } else {
-      return "finished_text_lose".tr();
+      return "helper_finished_text_lose".tr();
     }
   }
 }

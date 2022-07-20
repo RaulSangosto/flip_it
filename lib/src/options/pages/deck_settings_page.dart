@@ -107,7 +107,8 @@ class DeckSettingsItems extends StatelessWidget {
             ),
             SettingsItem(
               text: "special_cards_settings_title".tr(),
-              value: state.controller.specialCardsAmount.name,
+              value: _getSpecialCardsAmountLocalizatedText(
+                  state.controller.specialCardsAmount.name),
               onClick: () => BlocProvider.of<GameBloc>(context)
                   .add(ChangeSpecialCardsAmount()),
             ),
@@ -115,6 +116,10 @@ class DeckSettingsItems extends StatelessWidget {
         );
       },
     );
+  }
+
+  _getSpecialCardsAmountLocalizatedText(String name) {
+    return "special_cards_amout_$name".tr();
   }
 }
 
