@@ -45,5 +45,16 @@
     "helper_special_card_5_message" : "Devuelve la última carta del grupo en el que la coloques.",
     "helper_collection_direction_ascend_message" : "ascendente",
     "helper_collection_direction_descend_message" : "descendente",
-    "helper_collection_message" : "Coloca aqui tus cartas en orden {}."
+    "helper_collection_message" : "Coloca aqui tus cartas en orden {}.",
+    "tutorial_cta" : "Pulsa el botónm de la bombilla para hablar con {} y aprender a jugar.",
+    "tutorial_message_0" : "¡Hola! me llamo Flipy, pulsa el botón de Continuar para aprender las mecánicas del juego.",
+    "tutorial_message_1" : "Las 4 cartas del medio de la pantalla son los grupos en los que debes colocar tus cartas.",
+    "tutorial_message_2" : "Debes colocar las cartas en el orden que el grupo indica. Puedes er una flecha que indica si es en orden ascendente o descendente.",
+    "tutorial_message_3" : "Además puedes colocar cartas que tengan exactamente 10 de diferencia por arriba o por abajo.",
+    "tutorial_message_4" : "Las cartas sin números son cartas especiales, cada una hace algo diferente. Puedes preguntarme por ellas en cualquier momento durante la partida.",
+    "tutorial_message_5" : "Coloca todas las cartas en los grupos para ganar la partida.",
+    "tutorial_message_6" : "Si me necesitas pulsa el botón de la bombilla y te ayudaré con lo que necesites.",
+    "tutorial_message_7" : "Vamos a probarlo.  ¡Pasalo bien!",
+    "tutorial_button_continue" : "Continuar",
+    "tutorial_button_play" : "Empezar a Jugar"
 }

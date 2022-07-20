@@ -45,5 +45,16 @@
     "helper_special_card_5_message" : "Return the last card in the group you place it in.",
     "helper_collection_direction_ascend_message" : "ascendent",
     "helper_collection_direction_descend_message" : "descendent",
-    "helper_collection_message" : "Place your cards here in {} order."
+    "helper_collection_message" : "Place your cards here in {} order.",
+    "tutorial_cta" : "Press the lightbulb button to speak to {} and learn about the game.",
+    "tutorial_message_0" : "Hello! I am Flipy, press the Continue button to explore the game mechanics.",
+    "tutorial_message_1" : "The 4 cards in the middle of the screen are the groups where you need to place your cards.",
+    "tutorial_message_2" : "You need to place your cards in the order that the group indicates. You can see an arrow indicating if it is ascendent or descendent.",
+    "tutorial_message_3" : "You can also place cards that are exactly 10 diferent up or down.",
+    "tutorial_message_4" : "The cards that dont have numbers on them are special cards, each of them does something diferent. You can always ask me what they do during your game.",
+    "tutorial_message_5" : "Place all the cards in the group to win the game.",
+    "tutorial_message_6" : "If you need me press the lightbulb button and I will help you with whatever you need.",
+    "tutorial_message_7" : "Lets try it. Have fun!",
+    "tutorial_button_continue" : "Continue",
+    "tutorial_button_play" : "Start Playing"
 }

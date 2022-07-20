@@ -5,6 +5,10 @@ abstract class HelpMenuEvent {}
 
 class ToggleMenu extends HelpMenuEvent {}
 
+class CloseMenu extends HelpMenuEvent {}
+
+class OpenMenu extends HelpMenuEvent {}
+
 class UnselectWidget extends HelpMenuEvent {}
 
 class SelectCardMenu extends HelpMenuEvent {
@@ -26,4 +30,10 @@ class SelectCardDeckMenu extends HelpMenuEvent {
   final Key selected;
 
   SelectCardDeckMenu(this.cards, this.selected);
+}
+
+class SetMessage extends HelpMenuEvent {
+  final String message;
+
+  SetMessage(this.message);
 }

@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../state/bloc/game/game_bloc.dart';
+import '../../state/bloc/help_menu/helpmenu_bloc.dart';
 import '../../state/bloc/sound/sound_model.dart';
 import '../../theme/main_theme.dart';
 import 'confetti.dart';
@@ -156,6 +157,10 @@ class DrawerMenu extends StatelessWidget {
   Function(BuildContext)? onRestart;
 
   void _onRestartOpenDialog(context) {
+    if (onRestart != null) {
+      onRestart?.call(context);
+      return;
+    }
     showDialog(
       context: context,
       builder: (_) => const RestartGameDialog(),
@@ -195,7 +200,7 @@ class DrawerMenu extends StatelessWidget {
             ),
             ListTile(
               title: ElevatedButton(
-                onPressed: () => onRestart ?? _onRestartOpenDialog(context),
+                onPressed: () => _onRestartOpenDialog(context),
                 style: secondaryButton,
                 child: const Text("restart_button").tr(),
               ),
@@ -207,6 +212,8 @@ class DrawerMenu extends StatelessWidget {
               title: ElevatedButton(
                 onPressed: () {
                   Scaffold.of(context).closeEndDrawer();
+                  BlocProvider.of<HelpMenuBloc>(context).add(CloseMenu());
+                  BlocProvider.of<SoundBloc>(context).add(StopTalkHelper());
                   GoRouter.of(context).goNamed('main menu');
                 },
                 style: secondaryButton,

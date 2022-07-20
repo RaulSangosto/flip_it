@@ -17,10 +17,14 @@ class HelpArea extends StatefulWidget {
     Key? key,
     required this.win,
     required this.finished,
+    this.closeable = true,
+    this.expanded = false,
   }) : super(key: key);
 
   final bool win;
   final bool finished;
+  final bool closeable;
+  final bool expanded;
 
   @override
   State<HelpArea> createState() => _HelpAreaState();
@@ -47,7 +51,7 @@ class _HelpAreaState extends State<HelpArea> {
                       margin: const EdgeInsets.only(top: 30),
                       width:
                           open ? MediaQuery.of(context).size.width - 20 : 140,
-                      height: open ? 130 : 60,
+                      height: open ? (widget.expanded ? 180 : 130) : 60,
                       duration: const Duration(milliseconds: 200),
                       child: Card(
                         clipBehavior: Clip.hardEdge,
@@ -137,7 +141,10 @@ class _HelpAreaState extends State<HelpArea> {
                                     ),
                                     finised
                                         ? const SizedBox.shrink()
-                                        : InteractButton(open: open),
+                                        : InteractButton(
+                                            open: open,
+                                            closeable: widget.closeable,
+                                          ),
                                   ],
                                 ),
                               ),
@@ -170,29 +177,33 @@ class InteractButton extends StatelessWidget {
   const InteractButton({
     Key? key,
     required this.open,
+    required this.closeable,
   }) : super(key: key);
 
   final bool open;
+  final bool closeable;
 
   @override
   Widget build(BuildContext context) {
-    return CircleIconButton(
-        backgroundColor: accentColor,
-        onPressed: () {
-          BlocProvider.of<HelpMenuBloc>(context).add(ToggleMenu());
-          BlocProvider.of<SoundBloc>(context)
-              .add(PlaySound(open ? SoundType.closeHelp : SoundType.openHelp));
-          if (open) {
-            BlocProvider.of<SoundBloc>(context).add(StopTalkHelper());
-          } else {
-            BlocProvider.of<SoundBloc>(context).add(StartTalkHelper());
-          }
-        },
-        icon: Icon(
-          !open ? Icons.lightbulb_outline_rounded : Icons.close_rounded,
-          color: Theme.of(context).iconTheme.color,
-          size: 30,
-        ));
+    return !closeable && open
+        ? const SizedBox.shrink()
+        : CircleIconButton(
+            backgroundColor: accentColor,
+            onPressed: () {
+              BlocProvider.of<HelpMenuBloc>(context).add(ToggleMenu());
+              BlocProvider.of<SoundBloc>(context).add(
+                  PlaySound(open ? SoundType.closeHelp : SoundType.openHelp));
+              if (open) {
+                BlocProvider.of<SoundBloc>(context).add(StopTalkHelper());
+              } else {
+                BlocProvider.of<SoundBloc>(context).add(StartTalkHelper());
+              }
+            },
+            icon: Icon(
+              !open ? Icons.lightbulb_outline_rounded : Icons.close_rounded,
+              color: Theme.of(context).iconTheme.color,
+              size: 30,
+            ));
   }
 }
 

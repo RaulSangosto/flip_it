@@ -12,11 +12,14 @@ part 'helpmenu_state.dart';
 class HelpMenuBloc extends Bloc<HelpMenuEvent, HelpMenuState> {
   HelpMenuBloc() : super(const HelpMenuInitial()) {
     on<ToggleMenu>((event, emit) => emit(_toggleMenu(event)));
+    on<CloseMenu>((event, emit) => emit(_closeMenu(event)));
+    on<OpenMenu>((event, emit) => emit(_openMenu(event)));
     on<UnselectWidget>((event, emit) => emit(_unselectWidget(event)));
     on<SelectCardMenu>((event, emit) => emit(_selectCardMenu(event)));
     on<SelectCardCollectionMenu>(
         (event, emit) => emit(_selectCardGroupMenu(event)));
     on<SelectCardDeckMenu>((event, emit) => emit(_selectCardDeckMenu(event)));
+    on<SetMessage>((event, emit) => emit(_setMessage(event)));
   }
 
   HelpMenuState _selectCardGroupMenu(SelectCardCollectionMenu event) {
@@ -35,7 +38,11 @@ class HelpMenuBloc extends Bloc<HelpMenuEvent, HelpMenuState> {
 
   HelpMenuState _toggleMenu(ToggleMenu event) {
     final open = !state.open;
-    final message = open ? _getOpenMessage() : _getCloseMessage();
+    var message = state.message;
+    if (open && message != _getCloseMessage()) {
+      return HelpMenuPlaying(open, null, message, null);
+    }
+    message = open ? _getOpenMessage() : _getCloseMessage();
     return HelpMenuPlaying(open, null, message, null);
   }
 
@@ -62,5 +69,18 @@ class HelpMenuBloc extends Bloc<HelpMenuEvent, HelpMenuState> {
 
   String _getMessageDeck(List<int> cards) {
     return "helper_deck_message".tr(args: [cards.length.toString()]);
+  }
+
+  HelpMenuState _setMessage(SetMessage event) {
+    return HelpMenuPlaying(
+        state.open, null, event.message, ValueKey(event.message));
+  }
+
+  HelpMenuState _openMenu(OpenMenu event) {
+    return HelpMenuPlaying(true, null, state.message, state.selectedWidget);
+  }
+
+  HelpMenuState _closeMenu(CloseMenu event) {
+    return HelpMenuPlaying(false, null, state.message, state.selectedWidget);
   }
 }
