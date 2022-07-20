@@ -51,7 +51,7 @@ class _HelpAreaState extends State<HelpArea> {
                       margin: const EdgeInsets.only(top: 30),
                       width:
                           open ? MediaQuery.of(context).size.width - 20 : 140,
-                      height: open ? (widget.expanded ? 180 : 130) : 60,
+                      height: open ? (widget.expanded ? 200 : 130) : 60,
                       duration: const Duration(milliseconds: 200),
                       child: Card(
                         clipBehavior: Clip.hardEdge,
@@ -234,7 +234,7 @@ class HelpTextArea extends StatelessWidget {
                 child: open
                     ? Wrap(
                         alignment: WrapAlignment.center,
-                        runAlignment: WrapAlignment.center,
+                        runAlignment: WrapAlignment.start,
                         children: [
                           AnimatedTextKit(
                               key: finised
