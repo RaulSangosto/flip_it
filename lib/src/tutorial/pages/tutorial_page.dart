@@ -187,7 +187,7 @@ class _TutorialBodyState extends State<TutorialBody> {
                                         .add(ToggleMenu());
                                     BlocProvider.of<SoundBloc>(context)
                                         .add(StopTalkHelper());
-                                    GoRouter.of(context).goNamed("play");
+                                    GoRouter.of(context).pushNamed("play");
                                   }
                                 },
                               ),

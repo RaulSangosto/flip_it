@@ -197,6 +197,9 @@ void _playSongForRoute(BuildContext? context, Route<dynamic>? route) {
       case "credits":
         song = ThemeSongs.credits;
         break;
+      case "tutorial":
+        song = ThemeSongs.menus;
+        break;
     }
     if (song != null) {
       BlocProvider.of<SoundBloc>(context).add(PlaySong(song));
