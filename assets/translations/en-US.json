@@ -56,5 +56,19 @@
     "tutorial_message_6" : "If you need me press the lightbulb button and I will help you with whatever you need.",
     "tutorial_message_7" : "Lets try it. Have fun!",
     "tutorial_button_continue" : "Continue",
-    "tutorial_button_play" : "Start Playing"
+    "tutorial_button_play" : "Start Playing",
+    "credits_title" : "Credits",
+    "credits_code_title" : "Code",
+    "credits_design_title" : "Design",
+    "credits_sound_title" : "Sound Effects",
+    "credits_sound_author" : "Assets by {} and {}",
+    "credits_music_title" : "Music",
+    "credits_tool_title" : "Made with",
+    "credits_song_title_main_menu" : "Main Menu Song",
+    "credits_song_title_play" : "Play Song",
+    "credits_song_title_win" : "Win Song",
+    "credits_song_title_lose" : "Lose Song",
+    "credits_song_title_menus" : "Menus Song",
+    "credits_song_title_credits" : "Credits Song",
+    "credits_song_author_main_menu" : "{} by {}"
 }

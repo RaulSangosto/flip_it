@@ -56,5 +56,20 @@
     "tutorial_message_6" : "Si me necesitas pulsa el botón de la bombilla y te ayudaré con lo que necesites.",
     "tutorial_message_7" : "Vamos a probarlo.  ¡Pasalo bien!",
     "tutorial_button_continue" : "Continuar",
-    "tutorial_button_play" : "Empezar a Jugar"
+    "tutorial_button_play" : "Empezar a Jugar",
+    "credits_title" : "Créditos",
+    "credits_code_title" : "Código",
+    "credits_design_title" : "Diseño",
+    "credits_sound_title" : "Efectos Sonido",
+    "credits_sound_author" : "Assets de {} y {}",
+    "credits_music_title" : "Música",
+    "credits_tool_title" : "Hecho con",
+    "credits_tracklist_section_title" : "Tracklist:",
+    "credits_song_title_main_menu" : "Canción Menu Principal",
+    "credits_song_title_play" : "Canción Area de Juego",
+    "credits_song_title_win" : "Canción Victoria",
+    "credits_song_title_lose" : "Canción Derrota",
+    "credits_song_title_menus" : "Canción Menús",
+    "credits_song_title_credits" : "Canción Créditos",
+    "credits_song_author_main_menu" : "{} por {}"
 }

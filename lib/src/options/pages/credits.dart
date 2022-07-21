@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../theme/main_theme.dart';
@@ -18,35 +19,36 @@ class CreditsPage extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    "Credits",
+                    "credits_title",
                     style: cardTextStyle.copyWith(fontSize: 30),
-                  ),
+                  ).tr(),
                   const SizedBox(height: 20),
                   Expanded(
                     child: ListView(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 30.0, vertical: 10.0),
-                      children: const [
-                        ListSpacer(
+                      children: [
+                        const ListSpacer(
                           dense: true,
                         ),
                         CreditItem(
-                          category: "Code",
+                          category: "credits_code_title".tr(),
                           icon: Icons.code_rounded,
                           name: "Raúl Sánchez",
                         ),
                         CreditItem(
-                          category: "Design",
+                          category: "credits_design_title".tr(),
                           icon: Icons.design_services_rounded,
                           name: "Raúl Sánchez",
                         ),
                         CreditItem(
-                          category: "Sound Effects",
+                          category: "credits_sound_title".tr(),
                           icon: Icons.volume_up_rounded,
-                          name: "Assets by Keney and wubitog",
+                          name: "credits_sound_author"
+                              .tr(args: ["Keney", "Wubitog"]),
                         ),
                         CreditItem(
-                          category: "Music",
+                          category: "credits_music_title".tr(),
                           icon: Icons.library_music_rounded,
                           name: "Joshuuu",
                         ),
@@ -54,39 +56,45 @@ class CreditsPage extends StatelessWidget {
                           header: "TrackList:",
                           items: [
                             CreditItem(
-                              category: "Main Menu Song",
+                              category: "credits_song_title_main_menu".tr(),
                               icon: Icons.album_rounded,
-                              name: "Light Music by joshuuu",
+                              name: "credits_song_author_main_menu"
+                                  .tr(args: ["Light Music", "Joshuuu"]),
                             ),
                             CreditItem(
-                              category: "Play Song",
+                              category: "credits_song_title_play".tr(),
                               icon: Icons.album_rounded,
-                              name: "Warmth by joshuuu",
+                              name: "credits_song_author_main_menu"
+                                  .tr(args: ["Warmth", "Joshuuu"]),
                             ),
                             CreditItem(
-                              category: "Win Song",
+                              category: "credits_song_title_win".tr(),
                               icon: Icons.album_rounded,
-                              name: "You re in the Future by joshuuu",
+                              name: "credits_song_author_main_menu".tr(
+                                  args: ["You re in the Future", "Joshuuu"]),
                             ),
                             CreditItem(
-                              category: "Lose Song",
+                              category: "credits_song_title_lose".tr(),
                               icon: Icons.album_rounded,
-                              name: "Forever Lost by joshuuu",
+                              name: "credits_song_author_main_menu"
+                                  .tr(args: ["Forever Lost", "Joshuuu"]),
                             ),
                             CreditItem(
-                              category: "Menus Song",
+                              category: "credits_song_title_menus".tr(),
                               icon: Icons.album_rounded,
-                              name: "Groovy Booty by joshuuu",
+                              name: "credits_song_author_main_menu"
+                                  .tr(args: ["Groovy Booty", "Joshuuu"]),
                             ),
                             CreditItem(
-                              category: "Credits Song",
+                              category: "credits_song_title_credits".tr(),
                               icon: Icons.album_rounded,
-                              name: "Beach House by joshuuu",
+                              name: "credits_song_author_main_menu"
+                                  .tr(args: ["Beach House", "Joshuuu"]),
                             ),
                           ],
                         ),
                         CreditItem(
-                          category: "Made with",
+                          category: "credits_tool_title".tr(),
                           icon: Icons.flutter_dash_rounded,
                           name: "Flutter",
                         ),
