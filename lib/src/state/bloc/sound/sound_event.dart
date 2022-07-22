@@ -39,6 +39,10 @@ class PlaySong extends SoundEvent {
   PlaySong(this.song);
 }
 
+class PauseSound extends SoundEvent {}
+
+class ResumeSound extends SoundEvent {}
+
 class StopSong extends SoundEvent {}
 
 class SelectHelperItem extends SoundEvent {}

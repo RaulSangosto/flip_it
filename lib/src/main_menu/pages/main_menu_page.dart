@@ -1,4 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flipit/src/app/pages/app_lifecycle/lifeciclestate.dart';
+import 'package:flipit/src/theme/main_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../state/bloc/sound/sound_bloc.dart';
 import '../../ui/logo.dart';
@@ -7,10 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../ui/background.dart';
+import '../../ui/widgets.dart';
 
-class MainMenuPage extends StatelessWidget {
-  MainMenuPage({Key? key}) : super(key: key);
+class MainMenuPage extends StatefulWidget {
+  const MainMenuPage({Key? key}) : super(key: key);
 
+  @override
+  State<MainMenuPage> createState() => _MainMenuPageState();
+}
+
+class _MainMenuPageState extends LifecycleState<MainMenuPage> {
   final controller = FlipCardController();
 
   @override
@@ -19,13 +27,35 @@ class MainMenuPage extends StatelessWidget {
       painter: BackgrounCirclesPainter(),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(actions: [
-          IconButton(
-              onPressed: () {
-                GoRouter.of(context).pushNamed('options');
-              },
-              icon: const Icon(Icons.settings))
-        ]),
+        appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                onPressed: () {
+                  GoRouter.of(context).pushNamed('options');
+                },
+                iconSize: 30,
+                icon: const Icon(
+                  Icons.settings,
+                  color: darkColor,
+                ),
+              ),
+              CircleIconButton(
+                onPressed: () {
+                  GoRouter.of(context).pushNamed('shop');
+                },
+                radius: 25,
+                icon: const Icon(
+                  Icons.shopping_bag_rounded,
+                  color: white,
+                  size: 25,
+                ),
+                backgroundColor: darkColor,
+              ),
+            ],
+          ),
+        ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Center(
@@ -61,7 +91,11 @@ class MainMenuPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("author_name").tr(args: ["Raúl Sánchez"]),
+                    TextButton(
+                        onPressed: () =>
+                            GoRouter.of(context).pushNamed("credits"),
+                        child: const Text("author_name")
+                            .tr(args: ["Raúl Sánchez"])),
                     BlocBuilder<SoundBloc, SoundState>(
                       builder: (context, state) {
                         return IconButton(

@@ -16,6 +16,8 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> with HydratedMixin {
     on<PlaySound>((event, emit) => emit(_playSound(event)));
     on<PlaySong>((event, emit) => emit(_playSong(event)));
     on<StopSong>((event, emit) => emit(_stopSong(event)));
+    on<PauseSound>((event, emit) => emit(_pauseSound(event)));
+    on<ResumeSound>((event, emit) => emit(_resumeSound(event)));
     on<SelectHelperItem>((event, emit) => emit(_selectHelperItem()));
     on<StartTalkHelper>((event, emit) => emit(_startTalkHelper()));
     on<StopTalkHelper>((event, emit) => emit(_stopTalkHelper()));
@@ -86,6 +88,16 @@ class SoundBloc extends Bloc<SoundEvent, SoundState> with HydratedMixin {
   SoundState _stopSong(StopSong event) {
     state.controller.stopSong();
 
+    return SoundActive(state.controller.copyWith());
+  }
+
+  SoundState _pauseSound(PauseSound event) {
+    state.controller.pauseAllSound();
+    return SoundActive(state.controller.copyWith());
+  }
+
+  SoundState _resumeSound(ResumeSound event) {
+    state.controller.resumeAllSound();
     return SoundActive(state.controller.copyWith());
   }
 

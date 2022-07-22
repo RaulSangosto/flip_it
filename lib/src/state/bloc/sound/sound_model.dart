@@ -164,6 +164,22 @@ class SoundController {
     _crossFadeSong(musicVolume * .3, assetSong);
   }
 
+  void pauseAllSound() {
+    musicAudioPlayer.pause();
+    helperAudioPlayer.pause();
+    for (var audioPlayer in audioPlayers) {
+      audioPlayer.pause();
+    }
+  }
+
+  void resumeAllSound() {
+    musicAudioPlayer.resume();
+    helperAudioPlayer.resume();
+    for (var audioPlayer in audioPlayers) {
+      audioPlayer.resume();
+    }
+  }
+
   void startTalkHelper() {
     final position = Duration(milliseconds: (Random().nextInt(10000)));
     helperAudioPlayer.stop();
