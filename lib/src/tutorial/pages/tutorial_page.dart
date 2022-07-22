@@ -91,7 +91,6 @@ class _TutorialPageState extends State<TutorialPage> {
                             icon: Icon(
                               Icons.grid_view_rounded,
                               color: Theme.of(context).iconTheme.color,
-                              size: 30,
                             ),
                           );
                         }),

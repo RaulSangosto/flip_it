@@ -198,7 +198,6 @@ class TopBar extends StatelessWidget {
                 icon: Icon(
                   Icons.grid_view_rounded,
                   color: Theme.of(context).iconTheme.color,
-                  size: 30,
                 ),
               ),
             ],

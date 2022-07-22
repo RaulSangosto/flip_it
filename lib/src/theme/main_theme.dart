@@ -121,7 +121,7 @@ ThemeData mainTheme = ThemeData.light().copyWith(
       textTheme: ButtonTextTheme.primary,
       buttonColor: accentColor,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
-  iconTheme: const IconThemeData(color: textColor),
+  iconTheme: const IconThemeData(color: textColor, size: 30),
   sliderTheme: SliderThemeData(
     activeTrackColor: accentColor,
     activeTickMarkColor: accentColor,

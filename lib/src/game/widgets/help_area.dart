@@ -202,7 +202,6 @@ class InteractButton extends StatelessWidget {
             icon: Icon(
               !open ? Icons.lightbulb_outline_rounded : Icons.close_rounded,
               color: Theme.of(context).iconTheme.color,
-              size: 30,
             ));
   }
 }

@@ -11,6 +11,7 @@ import '../../main_menu/pages/main_menu_page.dart';
 import '../../options/pages/credits.dart';
 import '../../options/pages/deck_settings_page.dart';
 import '../../options/pages/option_page.dart';
+import '../../shop/pages/shop_page.dart';
 import '../../state/bloc/game/game_bloc.dart';
 import '../../state/bloc/help_menu/helpmenu_bloc.dart';
 import '../../state/bloc/sound/sound_bloc.dart';
@@ -28,12 +29,12 @@ class MyApp extends StatelessWidget {
         path: '/',
         name: 'main menu',
         builder: (context, state) {
-          return AnnotatedRegion<SystemUiOverlayStyle>(
-            value: const SystemUiOverlayStyle(
+          return const AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle(
               statusBarBrightness: Brightness.light,
               statusBarIconBrightness: Brightness.dark,
             ),
-            child: MainMenuPage(key: const Key('main menu')),
+            child: MainMenuPage(key: Key('main menu')),
           );
         },
       ),
@@ -66,6 +67,23 @@ class MyApp extends StatelessWidget {
                 statusBarIconBrightness: Brightness.dark,
               ),
               child: TutorialPage(key: Key('tutorial')),
+            ),
+            color: darkColor,
+          );
+        },
+      ),
+      GoRoute(
+        path: '/shop',
+        name: 'shop',
+        pageBuilder: (context, state) {
+          return buildMyTransition(
+            name: 'shop',
+            child: const AnnotatedRegion<SystemUiOverlayStyle>(
+              value: SystemUiOverlayStyle(
+                statusBarBrightness: Brightness.light,
+                statusBarIconBrightness: Brightness.dark,
+              ),
+              child: ShopPage(key: Key('shop')),
             ),
             color: darkColor,
           );
